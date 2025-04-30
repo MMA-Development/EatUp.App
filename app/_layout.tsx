@@ -6,7 +6,9 @@ import {Stack} from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import {useEffect} from 'react';
 import 'react-native-reanimated';
-import {AuthProvider} from "@/features/auth/contexts/authContext";
+import {Provider} from "react-redux";
+import {persistor, store} from "@/store";
+import {PersistGate} from "redux-persist/integration/react";
 
 export {
     // Catch any errors thrown by the Layout component.
@@ -43,11 +45,13 @@ export default function RootLayout() {
     }
 
     return (
-        <AuthProvider>
-            <GluestackUIProvider mode="system">
-                <RootLayoutNav/>
-            </GluestackUIProvider>
-        </AuthProvider>
+        <GluestackUIProvider mode="system">
+            <Provider store={store}>
+                <PersistGate persistor={persistor}>
+                    <RootLayoutNav/>
+                </PersistGate>
+            </Provider>
+        </GluestackUIProvider>
     )
 }
 
@@ -56,7 +60,7 @@ function RootLayoutNav() {
     return (
         <Stack>
             <Stack.Screen name="login" options={{headerShown: false, animation: "none"}}/>
-            <Stack.Screen name="(protected)" options={{headerShown: false, animation: "none"}} />
+            <Stack.Screen name="(protected)" options={{headerShown: false, animation: "none"}}/>
         </Stack>
     );
 }
