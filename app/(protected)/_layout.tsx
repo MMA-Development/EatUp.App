@@ -1,11 +1,12 @@
 import {Redirect, Stack} from "expo-router";
+import {useAppSelector} from "@/store/hooks";
 
 export default function ProtectedLayout() {
-    // const authContext = useContext(AuthContext);
-    //
-    // if (!authContext.isAuthenticated) {
-    //     return <Redirect href="/login"/>;
-    // }
+    const auth = useAppSelector((state) => state.auth)
+
+    if (!auth.isAuthenticated) {
+        return <Redirect href="/login"/>;
+    }
 
     return (
         <Stack>
