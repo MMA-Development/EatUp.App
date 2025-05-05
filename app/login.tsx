@@ -1,12 +1,12 @@
 import {Center} from "@/components/ui/center";
 import LoginForm from "@/features/auth/components/login-form";
+import {Box} from "@/components/ui/box";
 
 export default function LoginScreen() {
 
     return (
-        <Center className="bg-background-0 flex-1 w-full">
+        <Box className="bg-background-0 flex h-full justify-center items-center">
             <LoginForm />
-        </Center>
-
+        </Box>
     )
 }
