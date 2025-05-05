@@ -16,6 +16,9 @@ import {Button, ButtonText} from "@/components/ui/button";
 import {Input, InputField} from "@/components/ui/input";
 import {Box} from "@/components/ui/box";
 import {Text} from "@/components/ui/text";
+import {useAppDispatch} from "@/store/hooks";
+import {setToken} from "@/features/auth/store";
+import {router} from "expo-router";
 
 const schema = z.object({
     email: z.string().email({message: 'Invalid email address'}),
@@ -25,12 +28,16 @@ const schema = z.object({
 type LoginPayload = z.infer<typeof schema>
 
 export default function LoginForm() {
+    const dispatch = useAppDispatch()
+
     const {control, handleSubmit, formState: {errors}} = useForm<LoginPayload>({
         resolver: zodResolver(schema),
     });
 
     const onSubmit = (data: LoginPayload) => {
         console.log('Form Data:', data);
+        dispatch(setToken("karlo"))
+        router.replace("/")
     };
 
     return (
