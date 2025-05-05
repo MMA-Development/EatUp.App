@@ -5,11 +5,20 @@ import storage from 'redux-persist/lib/storage'
 import {rootReducer} from "@/store/root-reducer";
 import { eatupApi } from '@/lib/api-slice';
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import {encryptTransform} from "redux-persist-transform-encrypt";
 
 const persistConfig = {
     key: 'root',
     storage: AsyncStorage,
-    whitelist: ['auth']
+    whitelist: ['auth'],
+    transforms: [
+        encryptTransform({
+            secretKey: process.env.EXPO_PUBLIC_ENCRYPT_KEY!,
+            onError: function (error) {
+                console.error('Encryption error:', error)
+            }
+        })
+    ]
 }
 
 const persistedReducer = persistReducer<ReturnType<typeof rootReducer>>(persistConfig, rootReducer)

@@ -12,39 +12,44 @@ import {
     FormControlErrorIcon
 } from '@/components/ui/form-control';
 import {AlertCircleIcon} from '@/components/ui/icon';
-import {Button, ButtonText} from "@/components/ui/button";
+import {Button, ButtonSpinner, ButtonText} from "@/components/ui/button";
 import {Input, InputField} from "@/components/ui/input";
 import {Box} from "@/components/ui/box";
 import {Text} from "@/components/ui/text";
 import {useAppDispatch} from "@/store/hooks";
 import {setToken} from "@/features/auth/store";
 import {router} from "expo-router";
+import {useAuthenticateMutation} from "@/features/auth/api/login";
 
 const schema = z.object({
-    email: z.string().email({message: 'Invalid email address'}),
-    password: z.string().min(6, {message: 'Password must be at least 6 characters'}),
+    username: z.string().min(4, {message: 'Invalid username'}),
+    password: z.string().min(4, {message: 'Password must be at least 4 characters'}),
 });
 
 type LoginPayload = z.infer<typeof schema>
 
 export default function LoginForm() {
-    const dispatch = useAppDispatch()
+    const [login, {isLoading, isError}] = useAuthenticateMutation()
 
     const {control, handleSubmit, formState: {errors}} = useForm<LoginPayload>({
         resolver: zodResolver(schema),
     });
 
-    const onSubmit = (data: LoginPayload) => {
+    const onSubmit = async (data: LoginPayload) => {
         console.log('Form Data:', data);
-        dispatch(setToken("karlo"))
-        router.replace("/")
+        try {
+            await login(data)
+            router.replace("/")
+        } catch (e) {
+            console.error(e)
+        }
     };
 
     return (
         <Box className="flex w-2/3 items-center">
             <FormControl
                 className="mb-4"
-                isInvalid={!!errors.email}
+                isInvalid={!!errors.username}
             >
                 {/*<FormControlLabel className="mb-2">*/}
                 {/*    <FormControlLabelText className="" size={"2xl"}>*/}
@@ -53,22 +58,22 @@ export default function LoginForm() {
                 {/*</FormControlLabel>*/}
                 <Controller
                     control={control}
-                    name="email"
+                    name="username"
                     render={({field: {onChange, value}}) => (
                         <Input className="w-full" size={"xl"} variant={"rounded"}>
                             <InputField
-                                placeholder="Enter email"
+                                placeholder="Enter username"
                                 value={value}
                                 onChangeText={onChange}
                             />
                         </Input>
                     )}
                 />
-                {errors.email && (
+                {errors.username && (
                     <FormControlError>
                         <FormControlErrorIcon as={AlertCircleIcon} className="w-4 h-4 text-red-500"/>
                         <FormControlErrorText className="text-red-500 text-sm mt-1">
-                            {errors.email.message}
+                            {errors.username.message}
                         </FormControlErrorText>
                     </FormControlError>
                 )}
@@ -109,7 +114,7 @@ export default function LoginForm() {
             </FormControl>
 
             <Button
-                style={{ width: 100 }}
+                style={{width: 100}}
                 className={"w-[100px]"}
                 size="lg"
                 variant="solid"
