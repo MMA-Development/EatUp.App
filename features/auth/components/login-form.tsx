@@ -15,9 +15,6 @@ import {AlertCircleIcon} from '@/components/ui/icon';
 import {Button, ButtonSpinner, ButtonText} from "@/components/ui/button";
 import {Input, InputField} from "@/components/ui/input";
 import {Box} from "@/components/ui/box";
-import {Text} from "@/components/ui/text";
-import {useAppDispatch} from "@/store/hooks";
-import {setToken} from "@/features/auth/store";
 import {router} from "expo-router";
 import {useAuthenticateMutation} from "@/features/auth/api/login";
 
@@ -36,7 +33,6 @@ export default function LoginForm() {
     });
 
     const onSubmit = async (data: LoginPayload) => {
-        console.log('Form Data:', data);
         try {
             await login(data)
             router.replace("/")

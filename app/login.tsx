@@ -1,4 +1,3 @@
-import {Center} from "@/components/ui/center";
 import LoginForm from "@/features/auth/components/login-form";
 import {Box} from "@/components/ui/box";
 
