@@ -3,13 +3,11 @@ import {useAppSelector} from "@/store/hooks";
 import {persistor} from "@/store";
 
 export default function ProtectedLayout() {
-    persistor.purge()
-
     const auth = useAppSelector((state) => state.auth)
 
-    if (!auth.isAuthenticated) {
-        return <Redirect href="/login"/>;
-    }
+    // if (!auth.isAuthenticated) {
+    //     return <Redirect href="/login"/>;
+    // }
 
     return (
         <Stack>
