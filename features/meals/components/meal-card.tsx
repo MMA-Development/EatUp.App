@@ -9,22 +9,12 @@ import moment from "moment";
 import * as Haptics from 'expo-haptics';
 import {MyButton} from "@/components/ui/my-button";
 
-export default function MealCard() {
+interface MealCardProps {
+    meal: Meal
+}
 
-    const meal: Meal = {
-        "id": "1",
-        "vendorId": "ba6c0306-6506-4d92-d2e7-08dd8d31d017",
-        "vendorName": "Coop365",
-        "title": "Rundstykker",
-        "originalPrice": 60,
-        "price": 30,
-        "description": "Friskbagt rundstykker",
-        "quantity": 5,
-        "maxOrderQuantity": 1,
-        "firstAvailablePickup": "2025-05-07T06:40:26.522",
-        "lastAvailablePickup": "2025-05-07T13:40:26.522",
-        "categories": null
-    }
+
+export default function MealCard({meal}: MealCardProps) {
 
     const handleHaptics = async () => {
         try {

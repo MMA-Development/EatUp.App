@@ -1,80 +1,80 @@
-import { Text } from "@/components/ui/text";
-import { useAppDispatch } from "@/store/hooks";
-import MealCard from "@/features/meals/components/meal-card";
-import { SafeAreaView, ScrollView, View } from "react-native";
-import { MyButton } from "@/components/ui/my-button";
-import { Link, LinkText } from "@/components/ui/link";
+import {SafeAreaView, ScrollView, View} from "react-native";
+import {MyButton} from "@/components/ui/my-button";
+import MealCarousel from "@/features/meals/components/meal-carousel";
+import {Meal} from "@/features/meals/types";
+import MealCategories from "@/features/meals/components/meal-categories";
+import {useLocalSearchParams} from "expo-router";
+import {useEffect} from "react";
 
 export default function Screen() {
-    const dispatch = useAppDispatch();
+
+    const { categories } = useLocalSearchParams<{ categories?: string }>();
+
+    console.log(categories!);
+
+    const meals: Meal[] = [{
+        "id": "1",
+        "vendorId": "ba6c0306-6506-4d92-d2e7-08dd8d31d017",
+        "vendorName": "Coop365",
+        "title": "Rundstykker Morgenmad og Afstensmad",
+        "originalPrice": 60,
+        "price": 30,
+        "description": "Friskbagt rundstykker",
+        "quantity": 5,
+        "maxOrderQuantity": 1,
+        "firstAvailablePickup": "2025-05-07T06:40:26.522",
+        "lastAvailablePickup": "2025-05-07T13:40:26.522",
+        "categories": ["Morgenmad", "Aftensmad"]
+    },
+        {
+            "id": "1",
+            "vendorId": "ba6c0306-6506-4d92-d2e7-08dd8d31d017",
+            "vendorName": "Coop365",
+            "title": "Rundstykker Slik",
+            "originalPrice": 60,
+            "price": 30,
+            "description": "Friskbagt rundstykker",
+            "quantity": 5,
+            "maxOrderQuantity": 1,
+            "firstAvailablePickup": "2025-05-07T06:40:26.522",
+            "lastAvailablePickup": "2025-05-07T13:40:26.522",
+            "categories": ["Slik"]
+        },
+        {
+            "id": "1",
+            "vendorId": "ba6c0306-6506-4d92-d2e7-08dd8d31d017",
+            "vendorName": "Coop365",
+            "title": "Rundstykker Vegansk",
+            "originalPrice": 60,
+            "price": 30,
+            "description": "Friskbagt rundstykker",
+            "quantity": 5,
+            "maxOrderQuantity": 1,
+            "firstAvailablePickup": "2025-05-07T06:40:26.522",
+            "lastAvailablePickup": "2025-05-07T13:40:26.522",
+            "categories": ["Vegansk"]
+        },
+    ]
+
+
     return (
-        <View className="bg-background-0 flex-1">
-            <SafeAreaView className="bg-background-0 flex-1">
-                {/* Category Buttons */}
+        <View className={"bg-background-0 flex-1"}>
+            <SafeAreaView className=" max-h-full">
+                {/*Category Buttons*/}
+                <MealCategories/>
                 <ScrollView
-                    horizontal={true}
-                    showsHorizontalScrollIndicator={false}
-                    className="py-8"
+                    showsVerticalScrollIndicator={false}
+                    contentContainerStyle={{paddingBottom: 20}}
                 >
-                    <View className="px-4 gap-2 flex-row">
-                        <MyButton className="bg-emerald-500">Alt</MyButton>
-                        <MyButton variant="outline">Morgenmad</MyButton>
-                        <MyButton variant="outline">Aftensmad</MyButton>
-                        <MyButton variant="outline">Slik</MyButton>
-                        <MyButton variant="outline">Vegetar</MyButton>
-                        <MyButton variant="outline">Vegansk</MyButton>
+                    {/* Carousels */}
+                    <View className="px-4 space-y-6">
+                        <MealCarousel title={"Anbefalinger"} meals={meals}/>
+                        <MealCarousel title={"Favoritter"} meals={meals}/>
+                        <MealCarousel title={"Sidste Chance"} meals={meals}/>
                     </View>
-                </ScrollView>
-                <ScrollView contentContainerStyle={{ flexGrow: 1 }} scrollEventThrottle={32}>
-                    {/* Recommended Meals */}
-                    <View className="flex justify-between flex-row items-center px-4">
-                        <Text className="font-bold text-xl">Anbefalet</Text>
-                        <Link href="https://gluestack.io/">
-                            <LinkText>Se alle</LinkText>
-                        </Link>
-                    </View>
-                    <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
-                        <MealCard />
-                        <MealCard />
-                        <MealCard />
-                        <MealCard />
-                        <MealCard />
-                        <MealCard />
-                    </ScrollView>
-
-                    {/* Last Chance Meals */}
-                    <View className="flex justify-between flex-row items-center px-4 pt-4">
-                        <Text className="font-bold text-xl">Sidste Chance</Text>
-                        <Link href="https://gluestack.io/">
-                            <LinkText>Se alle</LinkText>
-                        </Link>
-                    </View>
-                    <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
-                        <MealCard />
-                        <MealCard />
-                        <MealCard />
-                        <MealCard />
-                        <MealCard />
-                        <MealCard />
-                    </ScrollView>
-
-                    {/* Another Last Chance Meals */}
-                    <View className="flex justify-between flex-row items-center px-4 pt-4">
-                        <Text className="font-bold text-xl">Sidste Chance</Text>
-                        <Link href="https://gluestack.io/">
-                            <LinkText>Se alle</LinkText>
-                        </Link>
-                    </View>
-                    <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
-                        <MealCard />
-                        <MealCard />
-                        <MealCard />
-                        <MealCard />
-                        <MealCard />
-                        <MealCard />
-                    </ScrollView>
                 </ScrollView>
             </SafeAreaView>
         </View>
+
     );
 }
