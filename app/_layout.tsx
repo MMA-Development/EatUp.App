@@ -9,6 +9,8 @@ import 'react-native-reanimated';
 import {Provider} from "react-redux";
 import {persistor, store} from "@/store";
 import {PersistGate} from "redux-persist/integration/react";
+import moment from "moment/moment";
+import 'moment/locale/da'
 
 export {
     // Catch any errors thrown by the Layout component.
@@ -43,6 +45,8 @@ export default function RootLayout() {
     if (!loaded) {
         return null;
     }
+
+    moment().locale("da")
 
     return (
         <GluestackUIProvider mode="system">
