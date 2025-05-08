@@ -8,6 +8,7 @@ import {Meal} from "@/features/meals/types";
 import moment from "moment";
 import * as Haptics from 'expo-haptics';
 import {MyButton} from "@/components/ui/my-button";
+import {router} from "expo-router";
 
 interface MealCardProps {
     meal: Meal
@@ -16,17 +17,17 @@ interface MealCardProps {
 
 export default function MealCard({meal}: MealCardProps) {
 
-    const handleHaptics = async () => {
-        try {
-            await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Soft);
-        } catch (error) {
-            console.log('Haptics fejl:', error);
-        }
+    const handlePress = async () => {
+        await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Soft);
+        router.push({
+            pathname: "/(protected)/(tabs)/meals/[id]",
+            params: { id: meal.id }
+        })
     };
 
 
     return (
-        <TouchableOpacity onPress={handleHaptics}>
+        <TouchableOpacity onPress={handlePress}>
             <Card variant="elevated"
                   className="border-[1px] relative w-96 my-2 mx-2 rounded-2xl p-0 border-background-100">
                 <Icon

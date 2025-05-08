@@ -35,7 +35,7 @@ export default function LoginForm() {
     const onSubmit = async (data: LoginPayload) => {
         try {
             await login(data)
-            router.replace("/")
+            router.replace("/(protected)/(tabs)/meals/index")
         } catch (e) {
             console.error(e)
         }
