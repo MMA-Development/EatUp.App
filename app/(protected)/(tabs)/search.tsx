@@ -1,10 +1,18 @@
-import {Box} from "@/components/ui/box";
-import {Text} from "@/components/ui/text";
+import React from 'react';
+import MapView from 'react-native-maps';
+import { StyleSheet, View } from 'react-native';
 
 export default function SearchScreen() {
     return (
-        <Box className="bg-background-0 flex h-full justify-center items-center">
-            <Text className="">Search Page</Text>
-        </Box>
+        <View className={"flex-1"}>
+            <MapView style={styles.map} showsUserLocation={true} showsMyLocationButton={true}/>
+        </View>
     );
 }
+
+const styles = StyleSheet.create({
+    map: {
+        width: '100%',
+        height: '100%',
+    },
+});
