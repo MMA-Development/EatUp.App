@@ -3,7 +3,7 @@ import {Heading} from "@/components/ui/heading"
 import {Text} from "@/components/ui/text"
 import {Image} from "@/components/ui/image"
 import {Pressable, TouchableOpacity, Vibration, View} from "react-native";
-import {ArrowRightIcon, Icon} from "@/components/ui/icon";
+import {ArrowRightIcon, FavouriteIcon, Icon} from "@/components/ui/icon";
 import {Meal} from "@/features/meals/types";
 import moment from "moment";
 import * as Haptics from 'expo-haptics';
@@ -29,6 +29,12 @@ export default function MealCard({meal}: MealCardProps) {
         <TouchableOpacity onPress={handleHaptics}>
             <Card variant="elevated"
                   className="border-[1px] relative w-96 my-2 mx-2 rounded-2xl p-0 border-background-100">
+                <Icon
+                    as={FavouriteIcon}
+                    size={"xl"}
+                    className="absolute top-2 right-2 z-10 text-white"
+                />
+
                 <Image
                     source={{
                         uri: "https://gluestack.github.io/public-blog-video-assets/mountains.png",
