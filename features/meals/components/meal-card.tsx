@@ -2,12 +2,11 @@ import {Card} from "@/components/ui/card"
 import {Heading} from "@/components/ui/heading"
 import {Text} from "@/components/ui/text"
 import {Image} from "@/components/ui/image"
-import {Pressable, TouchableOpacity, Vibration, View} from "react-native";
+import {TouchableOpacity, View} from "react-native";
 import {ArrowRightIcon, FavouriteIcon, Icon} from "@/components/ui/icon";
 import {Meal} from "@/features/meals/types";
 import moment from "moment";
 import * as Haptics from 'expo-haptics';
-import {MyButton} from "@/components/ui/my-button";
 import {router} from "expo-router";
 
 interface MealCardProps {
@@ -29,7 +28,7 @@ export default function MealCard({meal}: MealCardProps) {
     return (
         <TouchableOpacity onPress={handlePress}>
             <Card variant="elevated"
-                  className="border-[1px] relative w-96 my-2 mx-2 rounded-2xl p-0 border-background-100">
+                  className="border-[1px] relative min-w-96 my-2 mx-2 rounded-2xl p-0 border-background-100">
                 <Icon
                     as={FavouriteIcon}
                     size={"xl"}

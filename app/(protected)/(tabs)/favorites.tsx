@@ -1,10 +1,12 @@
-import {Box} from "@/components/ui/box";
-import {Text} from "@/components/ui/text";
+import {SafeAreaView, ScrollView, View} from "react-native";
+import {Heading} from "@/components/ui/heading";
+import MealList from "@/features/meals/components/meal-list";
 
 export default function FavouritesScreen() {
     return (
-        <Box className="bg-background-0 flex h-full justify-center items-center">
-            <Text className="">Favourites Page</Text>
-        </Box>
+        <SafeAreaView className="bg-background-0 flex-1 w-full">
+            <Heading className={"px-6"} size={"3xl"}>Favoritter</Heading>
+            <MealList/>
+        </SafeAreaView>
     );
 }

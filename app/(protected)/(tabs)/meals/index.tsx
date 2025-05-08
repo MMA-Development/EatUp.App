@@ -10,8 +10,6 @@ export default function Screen() {
 
     const { categories } = useLocalSearchParams<{ categories?: string }>();
 
-    console.log(categories!);
-
     const meals: Meal[] = [{
         "id": "1",
         "vendorId": "ba6c0306-6506-4d92-d2e7-08dd8d31d017",
