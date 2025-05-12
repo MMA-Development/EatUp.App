@@ -3,7 +3,7 @@ import {Controller, useForm} from 'react-hook-form';
 import {zodResolver} from '@hookform/resolvers/zod';
 import {FormControl, FormControlError, FormControlErrorIcon, FormControlErrorText} from '@/components/ui/form-control';
 import {AlertCircleIcon} from '@/components/ui/icon';
-import {Button, ButtonText} from "@/components/ui/button";
+import {Button, ButtonSpinner, ButtonText} from "@/components/ui/button";
 import {Input, InputField} from "@/components/ui/input";
 import {Box} from "@/components/ui/box";
 import {useAuthenticateMutation} from "@/features/auth/api/login";
@@ -105,6 +105,9 @@ export default function LoginForm() {
                 <ButtonText>
                     Sign In
                 </ButtonText>
+                {isLoading &&
+                    <ButtonSpinner/>
+                }
             </Button>
         </Box>
     );

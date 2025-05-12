@@ -13,6 +13,7 @@ export const PaymentSheetParamsPayloadSchema = z.object({
     foodPackageId: z.string(),
     price: z.number(),
     foodPackageTitle: z.string(),
-    stripeCustomerId: z.string()
+    stripeCustomerId: z.string(),
+    vendorId: z.string().uuid().nullable()
 })
 export type PaymentSheetParamsPayload = z.infer<typeof PaymentSheetParamsPayloadSchema>

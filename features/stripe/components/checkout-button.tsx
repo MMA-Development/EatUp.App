@@ -5,6 +5,7 @@ import {useStripe} from "@stripe/stripe-react-native";
 import {useFetchPaymentSheetParamsMutation} from "@/features/stripe/api/fetch-payment-sheet-params";
 import {useAppSelector} from "@/store/hooks";
 import {selectStripeUserId} from "@/features/auth/store";
+import {randomUUID} from "node:crypto";
 
 export default function CheckoutButton() {
     const {initPaymentSheet, presentPaymentSheet} = useStripe();
@@ -18,7 +19,8 @@ export default function CheckoutButton() {
             "foodPackageId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
             "price": 6969,
             "foodPackageTitle": "Title",
-            stripeCustomerId: customerId!
+            stripeCustomerId: customerId!,
+            vendorId: randomUUID()
         }).unwrap()
         await initPaymentSheet({
             merchantDisplayName: "Example, Inc.",

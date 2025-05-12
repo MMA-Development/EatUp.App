@@ -66,8 +66,8 @@ function RootLayoutNav() {
 
     return (
         <Stack>
-            <Stack.Screen name="index" options={{headerShown: false, animation: "none"}}/>
-            <Stack.Screen name="(protected)" options={{headerShown: false, animation: "none"}}/>
+            <Stack.Screen name="index" options={{headerShown: false, animation: "ios_from_left"}}/>
+            <Stack.Screen name="(protected)" options={{headerShown: false, animation: "ios_from_right"}}/>
         </Stack>
     );
 }

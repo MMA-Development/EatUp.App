@@ -35,7 +35,8 @@ export default function TabsLayout() {
             },
             headerTintColor: theme.headerTintColor,
             tabBarActiveTintColor: 'tomato',
-            headerShown: false
+            headerShown: false,
+            animation: "fade"
         }}>
             <Tabs.Screen name={"meals/index"} options={{title: "Udforsk", tabBarLabelStyle: { fontSize: 14}, tabBarIcon: (({focused}) => { return <Icon color={focused ? "tomato" : ""} size={"xl"} as={CalendarDaysIcon} />}), headerShown: false}}></Tabs.Screen>
             <Tabs.Screen name={"meals/[id]"} options={{ href: null }} />
