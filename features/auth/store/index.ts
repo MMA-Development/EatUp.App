@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import {createSlice, PayloadAction} from '@reduxjs/toolkit'
 import {RootState} from "@/store/types";
 
 interface Token {
@@ -9,12 +9,14 @@ interface Token {
 export interface Auth {
     isAuthenticated: boolean
     user: string | null
+    stripeUserId: string | null
     token: Token | null
 }
 
 export const initialAuthState: Auth = {
-    isAuthenticated: true,
+    isAuthenticated: false,
     user: null,
+    stripeUserId: null,
     token: null
 }
 
@@ -33,14 +35,19 @@ const authSlice = createSlice({
             state.token = null
             state.user = null
             state.isAuthenticated = false
+            state.stripeUserId = null
+        },
+        setStripeUserID(state, action: PayloadAction<string>) {
+            state.stripeUserId = action.payload
         }
     }
 })
 
-export const { setToken, setUser, logout } = authSlice.actions
+export const {setToken, setUser, logout, setStripeUserID} = authSlice.actions
 
 export const selectToken = (state: RootState) => state.auth.token
 export const selectUser = (state: RootState) => state.auth.user
 export const selectIsAuthenticated = (state: RootState) => state.auth.isAuthenticated
+export const selectStripeUserId = (state: RootState) => state.auth.stripeUserId
 
 export default authSlice.reducer

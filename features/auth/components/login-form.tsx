@@ -1,41 +1,26 @@
-import React from 'react';
-import {SafeAreaView} from 'react-native';
-import {useForm, Controller} from 'react-hook-form';
-import {z} from 'zod';
+import React, {useEffect} from 'react';
+import {Controller, useForm} from 'react-hook-form';
 import {zodResolver} from '@hookform/resolvers/zod';
-import {
-    FormControl,
-    FormControlLabel,
-    FormControlLabelText,
-    FormControlError,
-    FormControlErrorText,
-    FormControlErrorIcon
-} from '@/components/ui/form-control';
+import {FormControl, FormControlError, FormControlErrorIcon, FormControlErrorText} from '@/components/ui/form-control';
 import {AlertCircleIcon} from '@/components/ui/icon';
-import {Button, ButtonSpinner, ButtonText} from "@/components/ui/button";
+import {Button, ButtonText} from "@/components/ui/button";
 import {Input, InputField} from "@/components/ui/input";
 import {Box} from "@/components/ui/box";
-import {router} from "expo-router";
 import {useAuthenticateMutation} from "@/features/auth/api/login";
+import {LoginPayload, LoginPayloadSchema} from '../types';
+import {router} from "expo-router";
 
-const schema = z.object({
-    username: z.string().min(4, {message: 'Invalid username'}),
-    password: z.string().min(4, {message: 'Password must be at least 4 characters'}),
-});
-
-type LoginPayload = z.infer<typeof schema>
 
 export default function LoginForm() {
-    const [login, {isLoading, isError}] = useAuthenticateMutation()
+    const [login, {isLoading, isError, error}] = useAuthenticateMutation()
 
     const {control, handleSubmit, formState: {errors}} = useForm<LoginPayload>({
-        resolver: zodResolver(schema),
+        resolver: zodResolver(LoginPayloadSchema),
     });
 
     const onSubmit = async (data: LoginPayload) => {
         try {
             await login(data)
-            router.replace("/(protected)/(tabs)/meals/index")
         } catch (e) {
             console.error(e)
         }
