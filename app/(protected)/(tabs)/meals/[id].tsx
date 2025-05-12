@@ -6,6 +6,7 @@ import {Heading} from "@/components/ui/heading";
 import {ArrowLeftIcon, FavouriteIcon, Icon} from "@/components/ui/icon";
 import moment from "moment";
 import {router} from 'expo-router';
+import CheckoutButton from "@/features/stripe/components/checkout-button";
 
 export default function MealDetailScreen() {
     // Dette skulle selvfølgelig komme fra en API eller state
@@ -35,14 +36,16 @@ export default function MealDetailScreen() {
                     }}
                     alt={meal.title}
                 />
-                <Pressable onPress={() => console.log("favorite")} className="bg-gray-900/50 absolute top-12 right-4 z-10 rounded-full p-2">
-                <Icon
-                    as={FavouriteIcon}
-                    size="xl"
-                    className="text-white"
-                />
+                <Pressable onPress={() => console.log("favorite")}
+                           className="bg-gray-900/50 absolute top-12 right-4 z-10 rounded-full p-2">
+                    <Icon
+                        as={FavouriteIcon}
+                        size="xl"
+                        className="text-white"
+                    />
                 </Pressable>
-                <Pressable onPress={() => router.back()} className="bg-gray-900/50 absolute top-12 left-4 z-10 rounded-full p-2">
+                <Pressable onPress={() => router.back()}
+                           className="bg-gray-900/50 absolute top-12 left-4 z-10 rounded-full p-2">
                     <Icon
                         as={ArrowLeftIcon}
                         size="xl"
@@ -102,9 +105,11 @@ export default function MealDetailScreen() {
 
             {/* Reserve Button */}
             <View className="absolute bottom-0 left-0 right-0 p-4 bg-background-0">
-                <MyButton size="xl" action="positive">
-                    Reserver for {meal.price} kr
-                </MyButton>
+                {/*<MyButton size="xl" action="positive">*/}
+                {/*    Reserver for {meal.price} kr*/}
+                {/*</MyButton>*/}
+                <CheckoutButton/>
+
             </View>
         </View>
     );

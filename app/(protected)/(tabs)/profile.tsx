@@ -1,10 +1,17 @@
-import { Text } from "@/components/ui/text";
-import { SafeAreaView, View, ScrollView } from "react-native";
+import {Text} from "@/components/ui/text";
+import {SafeAreaView, View, ScrollView} from "react-native";
 import {CalendarDaysIcon, GlobeIcon, Icon, SettingsIcon} from "@/components/ui/icon";
 import {HStack} from "@/components/ui/hstack";
 import {VStack} from "@/components/ui/vstack";
+import {useAppDispatch, useAppSelector} from "@/store/hooks";
+import {logout, selectStripeUserId} from "@/features/auth/store";
+import {MyButton} from "@/components/ui/my-button";
 
 export default function ProfileScreen() {
+
+    const dispatch = useAppDispatch()
+    const stripe = useAppSelector(selectStripeUserId)
+
     const userData = {
         name: "Andreas Hansen",
         co2Saved: 125.5,
@@ -78,13 +85,14 @@ export default function ProfileScreen() {
                     <Text className="text-xl font-bold mb-4">Tidligere Bestillinger</Text>
                     <VStack space={"md"}>
                         {userData.previousOrders.map((order) => (
-                            <View key={order.id} className="bg-background-0 rounded-xl p-4 border border-background-100 shadow-sm">
+                            <View key={order.id}
+                                  className="bg-background-0 rounded-xl p-4 border border-background-100 shadow-sm">
                                 <HStack className="justify-between items-start">
                                     <VStack>
                                         <Text className="text-gray-400 text-sm">{order.date}</Text>
-                                            <Text className="text-base mt-1">
-                                                {order.meal}
-                                            </Text>
+                                        <Text className="text-base mt-1">
+                                            {order.meal}
+                                        </Text>
                                     </VStack>
                                     <VStack className="items-end">
                                         <Text className="text-green-600 text-sm">
@@ -99,6 +107,12 @@ export default function ProfileScreen() {
                         ))}
                     </VStack>
                 </View>
+                <Text>
+                    {stripe}
+                </Text>
+                <MyButton onPress={() => dispatch(logout())}>
+                    Logout
+                </MyButton>
             </ScrollView>
         </SafeAreaView>
     );

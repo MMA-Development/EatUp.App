@@ -11,6 +11,7 @@ import {persistor, store} from "@/store";
 import {PersistGate} from "redux-persist/integration/react";
 import moment from "moment/moment";
 import 'moment/locale/da'
+import {StripeProvider} from "@stripe/stripe-react-native";
 
 export {
     // Catch any errors thrown by the Layout component.
@@ -51,9 +52,11 @@ export default function RootLayout() {
     return (
         <GluestackUIProvider mode="system">
             <Provider store={store}>
-                <PersistGate persistor={persistor}>
-                    <RootLayoutNav/>
-                </PersistGate>
+                <StripeProvider publishableKey={"pk_test_51RH1h9QsPt84zxiHeWij93fG2SVjh9IMrQxpSBD3KTO4YvN0YEeWHtzJfNxHSLPkumgZagMDLLxTV6Jw9MhTTkVs00n1WhCpjH"}>
+                    <PersistGate persistor={persistor as never}>
+                        <RootLayoutNav/>
+                    </PersistGate>
+                </StripeProvider>
             </Provider>
         </GluestackUIProvider>
     )
@@ -63,7 +66,7 @@ function RootLayoutNav() {
 
     return (
         <Stack>
-            <Stack.Screen name="login" options={{headerShown: false, animation: "none"}}/>
+            <Stack.Screen name="index" options={{headerShown: false, animation: "none"}}/>
             <Stack.Screen name="(protected)" options={{headerShown: false, animation: "none"}}/>
         </Stack>
     );

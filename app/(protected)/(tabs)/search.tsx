@@ -1,5 +1,5 @@
 import React from 'react';
-import MapView, {Callout, Marker} from 'react-native-maps';
+import MapView, {Callout, Circle, Marker} from 'react-native-maps';
 import {StyleSheet, View} from 'react-native';
 import {markers} from "@/constants/markers";
 import {Text} from "@/components/ui/text";
