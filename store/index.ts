@@ -1,9 +1,10 @@
-import { configureStore } from '@reduxjs/toolkit'
+import {configureStore} from '@reduxjs/toolkit'
 import {persistReducer, persistStore} from 'redux-persist'
-import { FLUSH, PAUSE, PERSIST, PURGE, REGISTER, REHYDRATE } from 'redux-persist/es/constants'
+import {FLUSH, PAUSE, PERSIST, PURGE, REGISTER, REHYDRATE} from 'redux-persist/es/constants'
 import {rootReducer} from "@/store/root-reducer";
-import { eatupApi } from '@/lib/api-slice';
+import {eatupApi} from '@/lib/api-slice';
 import storage from "@react-native-async-storage/async-storage";
+import {listenerMiddleware} from "@/store/listener-middleware";
 
 
 const persistConfig = {
@@ -29,7 +30,7 @@ export const store = configureStore({
             serializableCheck: {
                 ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER]
             }
-        }).concat(eatupApi.middleware)
+        }).concat(eatupApi.middleware).concat(listenerMiddleware.middleware)
 })
 
 export const persistor = persistStore(store)
