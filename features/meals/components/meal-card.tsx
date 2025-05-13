@@ -6,18 +6,17 @@ import {TouchableOpacity, View} from "react-native";
 import {ArrowRightIcon, FavouriteIcon, Icon} from "@/components/ui/icon";
 import {Meal} from "@/features/meals/types";
 import moment from "moment";
-import * as Haptics from 'expo-haptics';
 import {router} from "expo-router";
+import {triggerSoftHaptic} from "@/lib/haptics";
 
 interface MealCardProps {
     meal: Meal
 }
 
-
 export default function MealCard({meal}: MealCardProps) {
 
     const handlePress = async () => {
-        await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Soft);
+        await triggerSoftHaptic();
         router.push({
             pathname: "/(protected)/(tabs)/meals/[id]",
             params: { id: meal.id }
