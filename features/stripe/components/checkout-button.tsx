@@ -18,8 +18,7 @@ export default function CheckoutButton() {
             "foodPackageId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
             "price": 6969,
             "foodPackageTitle": "Title",
-            stripeCustomerId: customerId!,
-            vendorId: "asd"
+            stripeCustomerId: customerId!
         }).unwrap()
         await initPaymentSheet({
             merchantDisplayName: "Example, Inc.",
@@ -29,6 +28,7 @@ export default function CheckoutButton() {
             // Set `allowsDelayedPaymentMethods` to true if your business can handle payment
             //methods that complete payment after a delay, like SEPA Debit and Sofort.
             allowsDelayedPaymentMethods: true,
+            returnURL: "/",
             defaultBillingDetails: {
                 name: 'Jane Doe',
             }
