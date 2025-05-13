@@ -59,13 +59,13 @@ export default function Screen() {
         <View className={"bg-background-0 flex-1"}>
             <SafeAreaView className=" max-h-full">
                 {/*Category Buttons*/}
-                <MealCategories/>
+                {/*<MealCategories/>*/}
                 <ScrollView
                     showsVerticalScrollIndicator={false}
                     contentContainerStyle={{paddingBottom: 20}}
                 >
                     {/* Carousels */}
-                    <View className="px-4 space-y-6">
+                    <View className="px-4 gap-2">
                         <MealCarousel title={"Anbefalinger"} meals={meals}/>
                         <MealCarousel title={"Favoritter"} meals={meals}/>
                         <MealCarousel title={"Sidste Chance"} meals={meals}/>

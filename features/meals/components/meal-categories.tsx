@@ -2,6 +2,9 @@ import { ScrollView, View, Text } from "react-native";
 import {useEffect, useState} from "react";
 import { MyButton } from "@/components/ui/my-button";
 import {useLocalSearchParams, useRouter} from "expo-router";
+import {twMerge} from "tailwind-merge";
+import clsx from "clsx";
+import {cn} from "@/lib/cn";
 
 const categories = [
     "Alt",
@@ -70,7 +73,9 @@ export default function MealCategories() {
                     {categories.map(category => (
                         <MyButton
                             key={category}
-                            className={selected.includes(category) ? "bg-emerald-500" : ""}
+                            className={cn("rounded-full", {
+                                "bg-emerald-500 text-white": selected.includes(category)
+                            })}
                             action={"secondary"}
                             onPress={() => toggleCategory(category)}
                         >

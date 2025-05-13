@@ -48,12 +48,10 @@ export default function MealList() {
     ]
 
     return (
-        <SafeAreaView className={"w-full"}>
             <ScrollView className={"w-full"}>
                 {meals.map((meal, index) =>
                     <MealCard key={index} meal={meal}/>
                 )}
             </ScrollView>
-        </SafeAreaView>
     )
 }
