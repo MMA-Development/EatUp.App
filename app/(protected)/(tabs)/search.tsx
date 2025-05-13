@@ -30,7 +30,7 @@ export default function SearchScreen() {
 
                 {selectedView === 0 ? (
                     // List View
-                    <View className={"flex-1 gap-4 flex-grow"}>
+                    <View className={"flex-1 gap-4 flex-grow px-2"}>
                         <MealCategories/>
                         <MealList/>
                     </View>
