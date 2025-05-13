@@ -2,7 +2,7 @@ import { z } from 'zod'
 
 export const PaymentSheetParamsResponseSchema = z.object({
     clientSecret: z.string(),
-    ephermalKey: z.string(),
+    ephemeralKey: z.string(),
     orderId: z.string().optional()
 })
 
@@ -13,7 +13,7 @@ export const PaymentSheetParamsPayloadSchema = z.object({
     foodPackageId: z.string(),
     price: z.number(),
     foodPackageTitle: z.string(),
-    stripeCustomerId: z.string()
-    // vendorId: z.string().uuid().nullable()
+    stripeCustomerId: z.string(),
+    vendorId: z.string().uuid()
 })
 export type PaymentSheetParamsPayload = z.infer<typeof PaymentSheetParamsPayloadSchema>
