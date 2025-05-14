@@ -1,5 +1,5 @@
 import {Text} from "@/components/ui/text";
-import {SafeAreaView, View, ScrollView} from "react-native";
+import {SafeAreaView, View, ScrollView, Pressable} from "react-native";
 import {CalendarDaysIcon, GlobeIcon, Icon, SettingsIcon} from "@/components/ui/icon";
 import {HStack} from "@/components/ui/hstack";
 import {VStack} from "@/components/ui/vstack";
@@ -7,9 +7,10 @@ import {useAppDispatch, useAppSelector} from "@/store/hooks";
 import {logout, selectStripeUserId} from "@/features/auth/store";
 import {MyButton} from "@/components/ui/my-button";
 import {useGetMeQuery} from "@/features/auth/api/me";
+import {useRouter} from "expo-router";
 
 export default function ProfileScreen() {
-
+    const router = useRouter();
     const dispatch = useAppDispatch()
     const stripe = useAppSelector(selectStripeUserId)
     const {data} = useGetMeQuery()
@@ -42,7 +43,9 @@ export default function ProfileScreen() {
             <View className="bg-background-0 px-4 py-6 border-b border-gray-200">
                 <HStack className="justify-between items-center px-2">
                     <Text className="text-2xl font-bold">{data?.fullName}</Text>
-                    <Icon as={SettingsIcon} size={"xl"}/>
+                    <Pressable onPress={() => router.push("/settings")}>
+                        <Icon as={SettingsIcon} size={"xl"}/>
+                    </Pressable>
                 </HStack>
             </View>
 

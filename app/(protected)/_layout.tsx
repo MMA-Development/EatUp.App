@@ -12,6 +12,7 @@ export default function ProtectedLayout() {
     return (
         <Stack>
             <Stack.Screen name="(tabs)" options={{headerShown: false}}/>
+            <Stack.Screen name="settings" options={{presentation: "modal", navigationBarHidden: true, animation: "slide_from_bottom", title: "Indstillinger"}}/>
         </Stack>
     )
 }
