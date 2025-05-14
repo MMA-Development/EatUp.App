@@ -6,11 +6,13 @@ import {VStack} from "@/components/ui/vstack";
 import {useAppDispatch, useAppSelector} from "@/store/hooks";
 import {logout, selectStripeUserId} from "@/features/auth/store";
 import {MyButton} from "@/components/ui/my-button";
+import {useGetMeQuery} from "@/features/auth/api/me";
 
 export default function ProfileScreen() {
 
     const dispatch = useAppDispatch()
     const stripe = useAppSelector(selectStripeUserId)
+    const {data} = useGetMeQuery()
 
     const userData = {
         name: "Andreas Hansen",
@@ -39,7 +41,7 @@ export default function ProfileScreen() {
             {/* Top bar med brugerens navn og dekorative elementer */}
             <View className="bg-background-0 px-4 py-6 border-b border-gray-200">
                 <HStack className="justify-between items-center px-2">
-                    <Text className="text-2xl font-bold">{userData.name}</Text>
+                    <Text className="text-2xl font-bold">{data?.fullName}</Text>
                     <Icon as={SettingsIcon} size={"xl"}/>
                 </HStack>
             </View>
