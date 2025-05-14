@@ -62,7 +62,7 @@ export default function MealCategories() {
         });
     };
 
-
+    // console.log(selected)
     return (
         <View className={"py-4 gap-2"}>
             <ScrollView

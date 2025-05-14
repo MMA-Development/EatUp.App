@@ -7,7 +7,7 @@ export default function FavouritesScreen() {
         <SafeAreaView className="bg-background-0 flex-1 w-full">
             <View className={"px-2"}>
                 <Heading className={"px-4 font-bold"} size={"xl"}>Favoritter</Heading>
-                <MealList/>
+                {/*<MealList/>*/}
             </View>
         </SafeAreaView>
     );

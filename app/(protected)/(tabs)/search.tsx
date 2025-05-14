@@ -1,30 +1,73 @@
 import React, {useState} from 'react';
-import MapView, {Callout, Circle, Marker} from 'react-native-maps';
-import {SafeAreaView, StyleSheet, View} from 'react-native';
-import {markers} from "@/constants/markers";
+import MapView, {Callout, Marker} from 'react-native-maps';
+import {StyleSheet, View} from 'react-native';
 import {Text} from "@/components/ui/text";
 import SegmentedControl from "@/components/ui/segmented-control";
 import {Input, InputField} from "@/components/ui/input";
-import MealList from "@/features/meals/components/meal-list";
 import MealCategories from "@/features/meals/components/meal-categories";
 import {useBottomTabBarHeight} from "@react-navigation/bottom-tabs";
 import {useSafeAreaInsets} from "react-native-safe-area-context";
+import {useVendorsQuery} from "@/features/map/api/vendors";
+import {useLocalSearchParams} from "expo-router";
+import {Slider, SliderFilledTrack, SliderThumb, SliderTrack} from '@/components/ui/slider';
+import {useDebouncedState} from "@/hooks/use-debounced-state";
+import MealList from "@/features/meals/components/meal-list";
 
 export default function SearchScreen() {
     const [selectedView, setSelectedView] = useState(0);
     const barHeight = useBottomTabBarHeight();
     const {bottom, top} = useSafeAreaInsets();
+    const {categories} = useLocalSearchParams<{ categories?: string }>();
+
+    const [searchValue, setSearchValue] = useDebouncedState('', 300);
+
+    const [params, setParams] = useState({
+        take: 10,  // number of items to fetch
+        skip: 0,   // pagination start point
+        longitude: 10.408513,  // longitude for geolocation
+        latitude: 55.380759,   // latitude for geolocation
+        radius: 30000,    // search radius in metres
+    });
+
+
+    const {data, error, isLoading} = useVendorsQuery({...params, search: searchValue}, {
+        refetchOnMountOrArgChange: true
+    });
+
     return (
         <View className={"flex-1 h-full bg-background-0"}>
             <View className={"relative h-full flex-1 flex"}>
                 <View className={"px-4 flex flex-col gap-8 z-10"} style={{
                     marginTop: top,
+                    marginLeft: 8,
+                    marginRight: 8,
                     marginBottom: 18,
                 }}>
-                        <Input className={"bg-background-0 rounded-md"} size={"xl"}>
-                            <InputField placeholder={"Søg"} size={"2xl"}/>
-                        </Input>
-                        <SegmentedControl options={["Liste", "Kort"]} onChange={(index) => setSelectedView(index)}/>
+                    <Input className={"bg-background-0 rounded-md"} size={"xl"}>
+                        <InputField
+                            onChangeText={setSearchValue}
+                            placeholder={"Søg"}
+                            size={"2xl"}/>
+                    </Input>
+
+                    <Slider
+                        className={"w-"}
+                        defaultValue={params.radius}
+                        maxValue={30000}
+                        minValue={1000}
+                        step={1000}
+                        onChangeEnd={(val) => setParams(prevState => ({...prevState, radius: val}))}
+                        size="md"
+                        orientation="horizontal"
+                        isDisabled={false}
+                        isReversed={false}
+                    >
+                        <SliderTrack>
+                            <SliderFilledTrack/>
+                        </SliderTrack>
+                        <SliderThumb/>
+                    </Slider>
+                    <SegmentedControl options={["Liste", "Kort"]} onChange={(index) => setSelectedView(index)}/>
                 </View>
 
 
@@ -32,14 +75,13 @@ export default function SearchScreen() {
                     // List View
                     <View className={"flex-1 gap-4 flex-grow px-2"}>
                         <MealCategories/>
-                        <MealList/>
+                        <MealList meals={[]}/>
                     </View>
                 ) : (
                     // Map View
-
                     <MapView style={styles.map} showsUserLocation={true} showsMyLocationButton={true}>
-                        {markers.map((marker, index) => (
-                            <Marker key={index} coordinate={marker}>
+                        {data?.items.map((marker, index) => (
+                            <Marker key={index} coordinate={{latitude: marker.latitude, longitude: marker.longitude}}>
                                 <Callout>
                                     <View className={"m-2"}>
                                         <Text>{marker.name}</Text>
