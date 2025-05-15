@@ -5,7 +5,7 @@ export const LoginPayloadSchema = z.object({
     password: z.string().min(4)
 })
 
-export type LoginPayload = z.infer<typeof LoginPayloadSchema>
+export type UpdatePayload = z.infer<typeof LoginPayloadSchema>
 
 export const LoginResponseSchema = z.object({
     accessToken: z.string(),

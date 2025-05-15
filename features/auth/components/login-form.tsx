@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {Controller, useForm} from 'react-hook-form';
 import {zodResolver} from '@hookform/resolvers/zod';
 import {FormControl, FormControlError, FormControlErrorIcon, FormControlErrorText} from '@/components/ui/form-control';
@@ -7,18 +7,17 @@ import {Button, ButtonSpinner, ButtonText} from "@/components/ui/button";
 import {Input, InputField} from "@/components/ui/input";
 import {Box} from "@/components/ui/box";
 import {useAuthenticateMutation} from "@/features/auth/api/login";
-import {LoginPayload, LoginPayloadSchema} from '../types';
-import {router} from "expo-router";
+import {LoginPayloadSchema, UpdatePayload} from '../types';
 
 
 export default function LoginForm() {
     const [login, {isLoading, isError, error}] = useAuthenticateMutation()
 
-    const {control, handleSubmit, formState: {errors}} = useForm<LoginPayload>({
+    const {control, handleSubmit, formState: {errors}} = useForm<UpdatePayload>({
         resolver: zodResolver(LoginPayloadSchema),
     });
 
-    const onSubmit = async (data: LoginPayload) => {
+    const onSubmit = async (data: UpdatePayload) => {
         try {
             await login(data)
         } catch (e) {
