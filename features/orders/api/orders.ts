@@ -5,16 +5,34 @@ import {
     OrdersResponseSchema,
 } from '../types'
 
-export const orders = eatupApi.injectEndpoints({
+export const ordersApi = eatupApi.injectEndpoints({
     endpoints: (builder) => ({
         getOrders: builder.query<OrdersResponse, OrdersPayload>({
-            query: ({take, skip, search}) => `/orders/user?Take=${take}&Skip=${skip}&Search=${search}`,
+            query: ({skip, take, search}) => ({
+                url: '/orders/user',
+                method: 'GET',
+                params: {skip, take, search}
+            }),
             extraOptions: {
                 dataSchema: OrdersResponseSchema
             },
+            serializeQueryArgs: ({endpointName}) => {
+                return endpointName
+            },
+            merge: (currentCache, newItems) : any => {
+                if (currentCache && newItems) {
+                    return {
+                        totalCount: newItems.totalCount,
+                        items: [...currentCache.items, ...newItems.items]
+                    }
+                }
+                return newItems
+            },
+            forceRefetch({currentArg, previousArg}) {
+                return currentArg?.skip !== previousArg?.skip
+            }
         })
-    }),
-    overrideExisting: true
+    })
 })
 
-export const {useGetOrdersQuery} = orders
+export const {useGetOrdersQuery} = ordersApi
