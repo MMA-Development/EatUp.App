@@ -8,6 +8,7 @@ import { logout, selectStripeUserId } from "@/features/auth/store";
 import { MyButton } from "@/components/ui/my-button";
 import { useGetMeQuery } from "@/features/auth/api/me";
 import { useRouter } from "expo-router";
+import {OrdersList} from "@/features/orders/components/orders-list";
 
 export default function ProfileScreen() {
     const router = useRouter();
@@ -86,30 +87,7 @@ export default function ProfileScreen() {
                 </View>
 
                 {/* Previous Orders Section */}
-                <View>
-                    <Text className="text-xl font-semibold mb-6">Tidligere Bestillinger</Text>
-                    <VStack space={"lg"}>
-                        {userData.previousOrders.map((order) => (
-                            <View
-                                key={order.id}
-                                className="bg-background-0 rounded-2xl p-5 border border-background-100"
-                            >
-                                <HStack className="justify-between">
-                                    <VStack>
-                                        <Text className="text-sm text-gray-500">{order.date}</Text>
-                                        <Text className="text-lg font-medium mt-2">{order.meal}</Text>
-                                    </VStack>
-                                    <VStack className="items-end">
-                                        <Text className="text-green-600 text-sm">
-                                            -{order.co2Saved} kg CO2
-                                        </Text>
-                                        <Text className="text-gray-600 mt-2">{order.price} kr</Text>
-                                    </VStack>
-                                </HStack>
-                            </View>
-                        ))}
-                    </VStack>
-                </View>
+                <OrdersList/>
 
                 {/* Logout Button */}
                 <MyButton onPress={() => dispatch(logout())} className="mt-8">
