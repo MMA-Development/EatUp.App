@@ -1,4 +1,4 @@
-import {Pressable, SafeAreaView, ScrollView, View} from "react-native";
+import {Platform, Pressable, SafeAreaView, ScrollView, View} from "react-native";
 import {MyButton} from "@/components/ui/my-button";
 import {Image} from "@/components/ui/image";
 import {Text} from "@/components/ui/text";
@@ -37,11 +37,11 @@ export default function MealDetailScreen() {
                     alt={meal.title}
                 />
                 <Pressable onPress={() => console.log("favorite")}
-                           className="bg-gray-900/50 absolute top-12 right-4 z-10 rounded-full p-2">
+                           className="bg-red-400/50 absolute top-12 right-4 z-10 rounded-full p-2">
                     <Icon
                         as={FavouriteIcon}
                         size="xl"
-                        className="text-white"
+                        className={"text-white"}
                     />
                 </Pressable>
                 <Pressable onPress={() => router.back()}
@@ -49,7 +49,7 @@ export default function MealDetailScreen() {
                     <Icon
                         as={ArrowLeftIcon}
                         size="xl"
-                        className="text-white"
+                        className={"text-white"}
                     />
                 </Pressable>
             </View>
@@ -108,7 +108,9 @@ export default function MealDetailScreen() {
                 {/*<MyButton size="xl" action="positive">*/}
                 {/*    Reserver for {meal.price} kr*/}
                 {/*</MyButton>*/}
-                <CheckoutButton/>
+                {Platform.OS !== 'web' &&
+                    <CheckoutButton/>
+                }
 
             </View>
         </View>

@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import MapView, {Callout, Marker} from 'react-native-maps';
-import {StyleSheet, View} from 'react-native';
+import {Platform, StyleSheet, View} from 'react-native';
 import {Text} from "@/components/ui/text";
 import SegmentedControl from "@/components/ui/segmented-control";
 import {Input, InputField} from "@/components/ui/input";
@@ -79,18 +79,19 @@ export default function SearchScreen() {
                     </View>
                 ) : (
                     // Map View
-                    <MapView style={styles.map} showsUserLocation={true} showsMyLocationButton={true}>
-                        {data?.items.map((marker, index) => (
-                            <Marker key={index} coordinate={{latitude: marker.latitude, longitude: marker.longitude}}>
-                                <Callout>
-                                    <View className={"m-2"}>
-                                        <Text>{marker.name}</Text>
-                                    </View>
-                                </Callout>
-                            </Marker>
-                        ))}
-                    </MapView>
-
+                    Platform.OS !== 'web' && (
+                        <MapView style={styles.map} showsUserLocation={true} showsMyLocationButton={true}>
+                            {data?.items.map((marker, index) => (
+                                <Marker key={index}
+                                        coordinate={{latitude: marker.latitude, longitude: marker.longitude}}>
+                                    <Callout>
+                                        <View className={"m-2"}>
+                                            <Text>{marker.name}</Text>
+                                        </View>
+                                    </Callout>
+                                </Marker>
+                            ))}
+                        </MapView>)
                 )}
             </View>
 
