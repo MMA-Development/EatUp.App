@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import MapView, {Callout, Marker} from 'react-native-maps';
 import {StyleSheet, View} from 'react-native';
 import {Text} from "@/components/ui/text";

@@ -74,7 +74,6 @@ export default function LoginForm() {
                     render={({field: {onChange, value}}) => (
                         <Input className="w-full" size={"xl"} variant={"rounded"}>
                             <InputField
-                                className="rounded-lg"
                                 secureTextEntry
                                 placeholder="Enter password"
                                 value={value}
