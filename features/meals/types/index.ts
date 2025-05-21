@@ -17,54 +17,21 @@ export const MealSchema = z.object({
 
 export type Meal = z.infer<typeof MealSchema>
 
-export const MealPayloadSchema = z
-    .object({
-        vendorName: z.string().default('Super Brugsen'),
-        title: z.string(),
-        originalPrice: z.number(),
-        price: z.number(),
-        description: z.string(),
-        quantity: z.number(),
-        maxOrderQuantity: z.number(),
-        firstAvailablePickup: z.date(),
-        lastAvailablePickup: z.date()
-    })
-    .superRefine((data, ctx) => {
-        if (data.price > data.originalPrice) {
-            ctx.addIssue({
-                path: ['price'],
-                code: z.ZodIssueCode.custom,
-                message: 'Price cannot be higher than original price'
-            })
-        }
+export const MealsPayloadSchema = z.object({
+    take: z.number(),
+    skip: z.number(),
+    search: z.string()
+})
 
-        if (data.maxOrderQuantity > data.quantity) {
-            ctx.addIssue({
-                path: ['maxOrderQuantity'],
-                code: z.ZodIssueCode.custom,
-                message: 'Max order quantity cannot be greater than quantity'
-            })
-        }
+export type MealsPayload = z.infer<typeof MealsPayloadSchema>
 
-        const first = new Date(data.firstAvailablePickup)
-        const last = new Date(data.lastAvailablePickup)
-        const now = new Date()
 
-        if (first > last) {
-            ctx.addIssue({
-                path: ['firstAvailablePickup'],
-                code: z.ZodIssueCode.custom,
-                message: 'First pickup must be before last pickup'
-            })
-        }
+export const MealsResponseSchema = z.object({
+    items: z.array(
+        MealSchema
+    ),
+    totalCount: z.number(),
+    page: z.number()
+})
 
-        if (first < now) {
-            ctx.addIssue({
-                path: ['firstAvailablePickup'],
-                code: z.ZodIssueCode.custom,
-                message: 'First pickup must be in the future'
-            })
-        }
-    })
-
-export type MealPayload = z.input<typeof MealPayloadSchema>
+export type MealsResponse = z.infer<typeof MealsResponseSchema>

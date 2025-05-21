@@ -12,6 +12,7 @@ import {useLocalSearchParams} from "expo-router";
 import {Slider, SliderFilledTrack, SliderThumb, SliderTrack} from '@/components/ui/slider';
 import {useDebouncedState} from "@/hooks/use-debounced-state";
 import MealList from "@/features/meals/components/meal-list";
+import {useGetMealsQuery} from "@/features/meals/api/get-meals";
 
 export default function SearchScreen() {
     const [selectedView, setSelectedView] = useState(0);
@@ -20,6 +21,14 @@ export default function SearchScreen() {
     const {categories} = useLocalSearchParams<{ categories?: string }>();
 
     const [searchValue, setSearchValue] = useDebouncedState('', 300);
+
+    const {data: meals} = useGetMealsQuery({
+        skip: 0,
+        take: 10,
+        search: searchValue,
+    }, {
+        refetchOnMountOrArgChange: true,
+    });
 
     const [params, setParams] = useState({
         take: 10,  // number of items to fetch
@@ -75,7 +84,9 @@ export default function SearchScreen() {
                     // List View
                     <View className={"flex-1 gap-4 flex-grow px-2"}>
                         <MealCategories/>
-                        <MealList meals={[]}/>
+                        {meals?.items && (
+                            <MealList meals={meals?.items}/>
+                        )}
                     </View>
                 ) : (
                     // Map View
