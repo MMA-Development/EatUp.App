@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import MapView, {Callout, Marker} from 'react-native-maps';
-import {Platform, StyleSheet, View} from 'react-native';
+import {ActivityIndicator, Platform, StyleSheet, View} from 'react-native';
 import {Text} from "@/components/ui/text";
 import SegmentedControl from "@/components/ui/segmented-control";
 import {Input, InputField} from "@/components/ui/input";
@@ -22,7 +22,7 @@ export default function SearchScreen() {
 
     const [searchValue, setSearchValue] = useDebouncedState('', 300);
 
-    const {data: meals} = useGetMealsQuery({
+    const {data: meals, isLoading: mealsIsLoading} = useGetMealsQuery({
         skip: 0,
         take: 10,
         search: searchValue,
@@ -84,6 +84,7 @@ export default function SearchScreen() {
                     // List View
                     <View className={"flex-1 gap-4 flex-grow px-2"}>
                         <MealCategories/>
+                        {mealsIsLoading && <ActivityIndicator/>}
                         {meals?.items && (
                             <MealList meals={meals?.items}/>
                         )}
@@ -105,8 +106,6 @@ export default function SearchScreen() {
                         </MapView>)
                 )}
             </View>
-
-
         </View>
     );
 }
