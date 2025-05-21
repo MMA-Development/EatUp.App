@@ -8,6 +8,7 @@ import {Input, InputField} from "@/components/ui/input";
 import {Box} from "@/components/ui/box";
 import {useAuthenticateMutation} from "@/features/auth/api/login";
 import {LoginPayloadSchema, UpdatePayload} from '../types';
+import {Text} from "@/components/ui/text";
 
 
 export default function LoginForm() {
@@ -91,7 +92,11 @@ export default function LoginForm() {
                     </FormControlError>
                 )}
             </FormControl>
-
+            {isError && (
+                <Text className={"text-red-500 text-xl mb-4"}>
+                    Der skete en fejl
+                </Text>
+            )}
             <Button
                 style={{width: 100}}
                 className={"w-[100px]"}
