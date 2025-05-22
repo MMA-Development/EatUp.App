@@ -17,11 +17,11 @@ export default function CheckoutButton() {
         try {
             const res = await init({
                 userName: "PALLE",
-                foodPackageId: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                foodPackageId: "4079674e-712a-4fd6-c4fc-08dd98411ae5",
                 price: 6969,
                 foodPackageTitle: "Title",
                 stripeCustomerId: customerId!,
-                vendorId: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                vendorId: "56303fa6-453c-4111-a0fe-08dd976657a9",
             }).unwrap();
 
             const {error} = await initPaymentSheet({

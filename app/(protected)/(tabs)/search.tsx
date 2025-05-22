@@ -85,9 +85,9 @@ export default function SearchScreen() {
                     <View className={"flex-1 gap-4 flex-grow px-2"}>
                         <MealCategories/>
                         {mealsIsLoading && <ActivityIndicator/>}
-                        {meals?.items && (
+                        {meals?.items ? (
                             <MealList meals={meals?.items}/>
-                        )}
+                        ) : <Text>Ingen måltider</Text>}
                     </View>
                 ) : (
                     // Map View
