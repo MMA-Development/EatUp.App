@@ -37,7 +37,7 @@ export default function ProfileForm() {
         }
     };
     return (
-        <VStack className={"h-full"}>
+        <VStack className={""}>
             <FormControl
                 className="mb-4"
                 isInvalid={!!errors.email}

@@ -4,10 +4,20 @@ import {Redirect, useRouter} from "expo-router";
 import {ImageBackground, KeyboardAvoidingView, Platform, TouchableOpacity, View} from "react-native";
 import {Text} from "@/components/ui/text";
 import {HStack} from "@/components/ui/hstack";
+import {useLocation} from "@/features/map/hooks/useLocation";
+import {useEffect} from "react";
 
 export default function LoginScreen() {
     const router = useRouter();
     const auth = useAppSelector((state) => state.auth)
+
+    const {permissionStatus, requestLocationPermission} = useLocation();
+
+    useEffect(() => {
+        if (permissionStatus === 'undetermined') {
+            void requestLocationPermission();
+        }
+    }, [permissionStatus]);
 
     if (auth.isAuthenticated) {
         return <Redirect href="/(protected)/(tabs)/meals"/>;
@@ -22,7 +32,7 @@ export default function LoginScreen() {
             <ImageBackground
                 source={require("../assets/images/bg.jpg")}
                 resizeMode="cover"
-                className="w-full h-[500px] absolute top-0 left-0 right-0"
+                className="w-full h-[550px] absolute top-0 left-0 right-0"
             >
                 <View className="flex-1 bg-black/10" />
             </ImageBackground>
