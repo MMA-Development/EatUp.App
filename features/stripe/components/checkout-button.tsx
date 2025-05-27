@@ -6,6 +6,7 @@ import {useFetchPaymentSheetParamsMutation} from "@/features/stripe/api/fetch-pa
 import {useAppSelector} from "@/store/hooks";
 import {selectStripeUserId} from "@/features/auth/store";
 import {router} from "expo-router";
+import {triggerSoftHaptic} from "@/lib/haptics";
 
 export default function CheckoutButton() {
     const {initPaymentSheet, presentPaymentSheet} = useStripe();
@@ -68,7 +69,10 @@ export default function CheckoutButton() {
             size={'xl'}
             variant="solid"
             disabled={!paymentSheetReady || isLoading}
-            onPress={openPaymentSheet}
+            onPress={async () => {
+                await triggerSoftHaptic()
+                await openPaymentSheet()
+            }}
         >
             Checkout
         </MyButton>
