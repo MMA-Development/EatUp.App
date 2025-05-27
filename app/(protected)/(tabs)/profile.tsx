@@ -1,20 +1,22 @@
-import { Text } from "@/components/ui/text";
-import { SafeAreaView, View, ScrollView, Pressable } from "react-native";
-import { CalendarDaysIcon, GlobeIcon, Icon, SettingsIcon } from "@/components/ui/icon";
-import { HStack } from "@/components/ui/hstack";
-import { VStack } from "@/components/ui/vstack";
-import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import { logout, selectStripeUserId } from "@/features/auth/store";
-import { MyButton } from "@/components/ui/my-button";
-import { useGetMeQuery } from "@/features/auth/api/me";
-import { useRouter } from "expo-router";
+import {Text} from "@/components/ui/text";
+import {SafeAreaView, View, ScrollView, Pressable} from "react-native";
+import {CalendarDaysIcon, GlobeIcon, Icon, SettingsIcon} from "@/components/ui/icon";
+import {HStack} from "@/components/ui/hstack";
+import {VStack} from "@/components/ui/vstack";
+import {useAppDispatch, useAppSelector} from "@/store/hooks";
+import {logout, selectStripeUserId} from "@/features/auth/store";
+import {MyButton} from "@/components/ui/my-button";
+import {useGetMeQuery} from "@/features/auth/api/me";
+import {useRouter} from "expo-router";
 import {OrdersList} from "@/features/orders/components/orders-list";
+import {useStripe} from "@stripe/stripe-react-native";
 
 export default function ProfileScreen() {
     const router = useRouter();
     const dispatch = useAppDispatch();
     const stripe = useAppSelector(selectStripeUserId);
-    const { data } = useGetMeQuery();
+    const {resetPaymentSheetCustomer} = useStripe()
+    const {data} = useGetMeQuery();
 
     const userData = {
         name: "Andreas Hansen",
@@ -45,7 +47,7 @@ export default function ProfileScreen() {
                 <HStack className="justify-between items-center">
                     <Text className="text-2xl font-semibold">{data?.fullName}</Text>
                     <Pressable onPress={() => router.push("/settings")}>
-                        <Icon as={SettingsIcon} size={"xl"} />
+                        <Icon as={SettingsIcon} size={"xl"}/>
                     </Pressable>
                 </HStack>
             </View>
@@ -57,7 +59,7 @@ export default function ProfileScreen() {
                     <View className="flex-1 bg-green-50 rounded-3xl p-6">
                         <HStack className="items-center mb-4">
                             <View className="w-10 h-10 bg-green-100 rounded-full items-center justify-center mr-3">
-                                <Icon as={GlobeIcon} size={"xl"} color={"green"} />
+                                <Icon as={GlobeIcon} size={"xl"} color={"green"}/>
                             </View>
                             <Text className="text-sm text-gray-600">CO2 Undgået</Text>
                         </HStack>
@@ -73,7 +75,7 @@ export default function ProfileScreen() {
                     <View className="flex-1 bg-blue-50 rounded-3xl p-6">
                         <HStack className="items-center mb-4">
                             <View className="w-10 h-10 bg-blue-100 rounded-full items-center justify-center mr-3">
-                                <Icon as={CalendarDaysIcon} size={"xl"} color={"blue"} />
+                                <Icon as={CalendarDaysIcon} size={"xl"} color={"blue"}/>
                             </View>
                             <Text className="text-sm text-gray-600">Penge Sparet</Text>
                         </HStack>
@@ -90,7 +92,13 @@ export default function ProfileScreen() {
                 <OrdersList/>
 
                 {/* Logout Button */}
-                <MyButton onPress={() => dispatch(logout())} className="mt-8">
+                <MyButton
+                    onPress={async () => {
+                        await resetPaymentSheetCustomer()
+                        dispatch(logout())
+                    }}
+                    className="mt-8"
+                >
                     Logout
                 </MyButton>
 
@@ -98,5 +106,6 @@ export default function ProfileScreen() {
                 <Text className="mt-4 text-center text-gray-500">{stripe}</Text>
             </ScrollView>
         </SafeAreaView>
-    );
+    )
+        ;
 }
