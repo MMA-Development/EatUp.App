@@ -37,7 +37,7 @@ export default function LoginForm() {
                     control={control}
                     name="username"
                     render={({field: {onChange, value}}) => (
-                        <Input className="w-full rounded-full border-2" size={"2xl"} variant={"rounded"}>
+                        <Input className="w-full rounded-2xl border-2" size={"2xl"} variant={"rounded"}>
                             <InputField
                                 placeholder="Username"
                                 value={value}
@@ -63,7 +63,7 @@ export default function LoginForm() {
                     control={control}
                     name="password"
                     render={({field: {onChange, value}}) => (
-                        <Input className="w-full rounded-full border-2" size={"2xl"} variant={"rounded"}>
+                        <Input className="w-full rounded-2xl border-2" size={"2xl"} variant={"rounded"}>
                             <InputField
                                 secureTextEntry
                                 placeholder="Password"
@@ -87,7 +87,7 @@ export default function LoginForm() {
                 </Text>
             )}
             <Button
-                className={"w-full rounded-full bg-success-500"}
+                className={"w-full rounded-2xl bg-success-500"}
                 size="2xl"
                 variant="solid"
                 action="primary"

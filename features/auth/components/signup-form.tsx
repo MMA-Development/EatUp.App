@@ -34,7 +34,7 @@ export default function SignupForm() {
                     control={control}
                     name="username"
                     render={({field: {onChange, value}}) => (
-                        <Input className="w-full rounded-full border-2" size={"2xl"} variant={"rounded"}>
+                        <Input className="w-full rounded-2xl border-2" size={"2xl"} variant={"rounded"}>
                             <InputField
                                 placeholder="Brugernavn"
                                 value={value}
@@ -60,7 +60,7 @@ export default function SignupForm() {
                     control={control}
                     name="password"
                     render={({field: {onChange, value}}) => (
-                        <Input className="w-full rounded-full border-2" size={"2xl"} variant={"rounded"}>
+                        <Input className="w-full rounded-2xl border-2" size={"2xl"} variant={"rounded"}>
                             <InputField
                                 secureTextEntry
                                 placeholder="Kodeord"
@@ -85,7 +85,7 @@ export default function SignupForm() {
                     control={control}
                     name="fullName"
                     render={({field: {onChange, value}}) => (
-                        <Input className="w-full rounded-full border-2" size={"2xl"} variant={"rounded"}>
+                        <Input className="w-full rounded-2xl border-2" size={"2xl"} variant={"rounded"}>
                             <InputField
                                 placeholder="Navn"
                                 value={value}
@@ -109,7 +109,7 @@ export default function SignupForm() {
                     control={control}
                     name="email"
                     render={({field: {onChange, value}}) => (
-                        <Input className="w-full rounded-full border-2" size={"2xl"} variant={"rounded"}>
+                        <Input className="w-full rounded-2xl border-2" size={"2xl"} variant={"rounded"}>
                             <InputField
                                 placeholder="Email"
                                 value={value}
@@ -131,7 +131,7 @@ export default function SignupForm() {
                 </Text>
             )}
             <Button
-                className={"w-full rounded-full bg-success-500"}
+                className={"w-full rounded-2xl bg-success-500"}
                 size="2xl"
                 variant="solid"
                 action="primary"
