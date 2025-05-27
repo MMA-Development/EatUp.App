@@ -36,7 +36,7 @@ export default function SignupForm() {
                     render={({field: {onChange, value}}) => (
                         <Input className="w-full rounded-full border-2" size={"2xl"} variant={"rounded"}>
                             <InputField
-                                placeholder="Indtast brugernavn"
+                                placeholder="Brugernavn"
                                 value={value}
                                 onChangeText={onChange}
                             />
@@ -63,7 +63,7 @@ export default function SignupForm() {
                         <Input className="w-full rounded-full border-2" size={"2xl"} variant={"rounded"}>
                             <InputField
                                 secureTextEntry
-                                placeholder="Indtast password"
+                                placeholder="Kodeord"
                                 value={value}
                                 onChangeText={onChange}
                             />
@@ -87,7 +87,7 @@ export default function SignupForm() {
                     render={({field: {onChange, value}}) => (
                         <Input className="w-full rounded-full border-2" size={"2xl"} variant={"rounded"}>
                             <InputField
-                                placeholder="Indtast fulde navn"
+                                placeholder="Navn"
                                 value={value}
                                 onChangeText={onChange}
                             />
@@ -111,7 +111,7 @@ export default function SignupForm() {
                     render={({field: {onChange, value}}) => (
                         <Input className="w-full rounded-full border-2" size={"2xl"} variant={"rounded"}>
                             <InputField
-                                placeholder="Indtast email"
+                                placeholder="Email"
                                 value={value}
                                 onChangeText={onChange}
                             />
