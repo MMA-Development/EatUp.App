@@ -29,7 +29,7 @@ export default function LoginScreen() {
 
             {/* Content overlays image */}
             <View className="flex-1 justify-end">
-                <View className="bg-white rounded-t-3xl px-6 pt-12 pb-10 w-full">
+                <View className="bg-background-0 rounded-t-3xl px-6 pt-12 pb-10 w-full">
                     <Text className="text-2xl font-bold ml-8 mb-6">Log ind</Text>
 
                     <View className="items-center">

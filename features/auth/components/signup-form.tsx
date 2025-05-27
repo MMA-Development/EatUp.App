@@ -25,21 +25,16 @@ export default function SignupForm() {
         }
     };
     return (
-        <Box className="flex w-2/3 items-center">
+        <Box className="flex w-5/6 items-center gap-1">
             <FormControl
                 className="mb-4"
                 isInvalid={!!errors.username}
             >
-                {/*<FormControlLabel className="mb-2">*/}
-                {/*    <FormControlLabelText className="" size={"2xl"}>*/}
-                {/*        Email*/}
-                {/*    </FormControlLabelText>*/}
-                {/*</FormControlLabel>*/}
                 <Controller
                     control={control}
                     name="username"
                     render={({field: {onChange, value}}) => (
-                        <Input className="w-full" size={"xl"} variant={"rounded"}>
+                        <Input className="w-full rounded-full border-2" size={"2xl"} variant={"rounded"}>
                             <InputField
                                 placeholder="Indtast brugernavn"
                                 value={value}
@@ -48,30 +43,24 @@ export default function SignupForm() {
                         </Input>
                     )}
                 />
-                {errors.username && (
-                    <FormControlError>
-                        <FormControlErrorIcon as={AlertCircleIcon} className="w-4 h-4 text-red-500"/>
-                        <FormControlErrorText className="text-red-500 text-sm mt-1">
-                            {errors.username.message}
-                        </FormControlErrorText>
-                    </FormControlError>
-                )}
+                <FormControlError>
+                    <FormControlErrorIcon as={AlertCircleIcon} className="w-4 h-4 text-red-500"/>
+                    <FormControlErrorText className="text-red-500 text-sm mt-1">
+                        {errors.username?.message}
+                    </FormControlErrorText>
+                </FormControlError>
+
             </FormControl>
 
             <FormControl
                 className="mb-4"
                 isInvalid={!!errors.password}
             >
-                {/*<FormControlLabel className="mb-2">*/}
-                {/*    <FormControlLabelText className="" size={"2xl"}>*/}
-                {/*        Password*/}
-                {/*    </FormControlLabelText>*/}
-                {/*</FormControlLabel>*/}
                 <Controller
                     control={control}
                     name="password"
                     render={({field: {onChange, value}}) => (
-                        <Input className="w-full" size={"xl"} variant={"rounded"}>
+                        <Input className="w-full rounded-full border-2" size={"2xl"} variant={"rounded"}>
                             <InputField
                                 secureTextEntry
                                 placeholder="Indtast password"
@@ -81,29 +70,22 @@ export default function SignupForm() {
                         </Input>
                     )}
                 />
-                {errors.password && (
-                    <FormControlError>
-                        <FormControlErrorIcon as={AlertCircleIcon} className="w-4 h-4 text-red-500"/>
-                        <FormControlErrorText className="text-red-500 text-sm mt-1">
-                            {errors.password.message}
-                        </FormControlErrorText>
-                    </FormControlError>
-                )}
+                <FormControlError>
+                    <FormControlErrorIcon as={AlertCircleIcon} className="w-4 h-4 text-red-500"/>
+                    <FormControlErrorText className="text-red-500 text-sm mt-1">
+                        {errors.password?.message}
+                    </FormControlErrorText>
+                </FormControlError>
             </FormControl>
             <FormControl
                 className="mb-4"
                 isInvalid={!!errors.fullName}
             >
-                {/*<FormControlLabel className="mb-2">*/}
-                {/*    <FormControlLabelText className="" size={"2xl"}>*/}
-                {/*        Email*/}
-                {/*    </FormControlLabelText>*/}
-                {/*</FormControlLabel>*/}
                 <Controller
                     control={control}
                     name="fullName"
                     render={({field: {onChange, value}}) => (
-                        <Input className="w-full" size={"xl"} variant={"rounded"}>
+                        <Input className="w-full rounded-full border-2" size={"2xl"} variant={"rounded"}>
                             <InputField
                                 placeholder="Indtast fulde navn"
                                 value={value}
@@ -112,29 +94,22 @@ export default function SignupForm() {
                         </Input>
                     )}
                 />
-                {errors.fullName && (
-                    <FormControlError>
-                        <FormControlErrorIcon as={AlertCircleIcon} className="w-4 h-4 text-red-500"/>
-                        <FormControlErrorText className="text-red-500 text-sm mt-1">
-                            {errors.fullName.message}
-                        </FormControlErrorText>
-                    </FormControlError>
-                )}
+                <FormControlError>
+                    <FormControlErrorIcon as={AlertCircleIcon} className="w-4 h-4 text-red-500"/>
+                    <FormControlErrorText className="text-red-500 text-sm mt-1">
+                        {errors.fullName?.message}
+                    </FormControlErrorText>
+                </FormControlError>
             </FormControl>
             <FormControl
                 className="mb-4"
                 isInvalid={!!errors.email}
             >
-                {/*<FormControlLabel className="mb-2">*/}
-                {/*    <FormControlLabelText className="" size={"2xl"}>*/}
-                {/*        Email*/}
-                {/*    </FormControlLabelText>*/}
-                {/*</FormControlLabel>*/}
                 <Controller
                     control={control}
                     name="email"
                     render={({field: {onChange, value}}) => (
-                        <Input className="w-full" size={"xl"} variant={"rounded"}>
+                        <Input className="w-full rounded-full border-2" size={"2xl"} variant={"rounded"}>
                             <InputField
                                 placeholder="Indtast email"
                                 value={value}
@@ -143,14 +118,12 @@ export default function SignupForm() {
                         </Input>
                     )}
                 />
-                {errors.email && (
-                    <FormControlError>
-                        <FormControlErrorIcon as={AlertCircleIcon} className="w-4 h-4 text-red-500"/>
-                        <FormControlErrorText className="text-red-500 text-sm mt-1">
-                            {errors.email.message}
-                        </FormControlErrorText>
-                    </FormControlError>
-                )}
+                <FormControlError>
+                    <FormControlErrorIcon as={AlertCircleIcon} className="w-4 h-4 text-red-500"/>
+                    <FormControlErrorText className="text-red-500 text-sm mt-1">
+                        {errors.email?.message}
+                    </FormControlErrorText>
+                </FormControlError>
             </FormControl>
             {isError && (
                 <Text className={"text-red-500 text-xl mb-4"}>
@@ -158,9 +131,8 @@ export default function SignupForm() {
                 </Text>
             )}
             <Button
-                style={{width: 120}}
-                className={"w-[100px]"}
-                size="lg"
+                className={"w-full rounded-full bg-success-500"}
+                size="2xl"
                 variant="solid"
                 action="primary"
                 onPress={handleSubmit(onSubmit)}
