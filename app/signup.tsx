@@ -1,19 +1,13 @@
-import LoginForm from "@/features/auth/components/login-form";
+import SignupForm from "@/features/auth/components/signup-form";
 import {Box} from "@/components/ui/box";
-import {useAppSelector} from "@/store/hooks";
-import {Link, Redirect, useRouter} from "expo-router";
-import {Image} from "@/components/ui/image";
+import {Link, useRouter} from "expo-router";
 import {SafeAreaView, TouchableOpacity, View} from "react-native";
 import {Text} from "@/components/ui/text";
+import {Image} from "@/components/ui/image";
+import LoginForm from "@/features/auth/components/login-form";
 
-export default function LoginScreen() {
+export default function SignupScreen() {
     const router = useRouter();
-    const auth = useAppSelector((state) => state.auth)
-
-    if (auth.isAuthenticated) {
-        return <Redirect href="/(protected)/(tabs)/meals"/>;
-    }
-
     return (
         <SafeAreaView className="bg-background-0 flex-1">
             <View className="flex-1 justify-center items-center px-4">
@@ -23,14 +17,14 @@ export default function LoginScreen() {
                     source={require("../assets/images/logo.png")}
                     alt="image"
                 />
-                <LoginForm />
+                <SignupForm />
             </View>
 
             <TouchableOpacity
-                onPress={() => router.replace("/signup")}
+                onPress={() => router.replace("/")}
                 className="items-center pb-6"
             >
-                <Text className="text-blue-400">Har du ikke en konto, registrer her!</Text>
+                <Text className="text-blue-400">Har du allerede en konto, login her!</Text>
             </TouchableOpacity>
         </SafeAreaView>
     )

@@ -22,3 +22,12 @@ export const MeResponseSchema = z.object({
 })
 
 export type MeResponse = z.infer<typeof MeResponseSchema>
+
+export const SignupPayloadSchema = z.object({
+    username: z.string().min(4).trim(),
+    password: z.string().min(4).trim(),
+    fullName: z.string().min(4).trim(),
+    email: z.string().email().trim(),
+})
+
+export type SignupPayload = z.infer<typeof SignupPayloadSchema>
