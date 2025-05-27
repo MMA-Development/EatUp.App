@@ -12,6 +12,7 @@ import {Text} from "@/components/ui/text";
 
 
 export default function LoginForm() {
+
     const [login, {isLoading, isError, error}] = useAuthenticateMutation()
 
     const {control, handleSubmit, formState: {errors}} = useForm<UpdatePayload>({
@@ -27,70 +28,58 @@ export default function LoginForm() {
     };
 
     return (
-        <Box className="flex w-2/3 items-center">
+        <Box className="flex w-5/6 items-center gap-1">
             <FormControl
                 className="mb-4"
                 isInvalid={!!errors.username}
             >
-                {/*<FormControlLabel className="mb-2">*/}
-                {/*    <FormControlLabelText className="" size={"2xl"}>*/}
-                {/*        Email*/}
-                {/*    </FormControlLabelText>*/}
-                {/*</FormControlLabel>*/}
                 <Controller
                     control={control}
                     name="username"
                     render={({field: {onChange, value}}) => (
-                        <Input className="w-full" size={"xl"} variant={"rounded"}>
+                        <Input className="w-full rounded-full border-2" size={"2xl"} variant={"rounded"}>
                             <InputField
-                                placeholder="Enter username"
+                                placeholder="Username"
                                 value={value}
                                 onChangeText={onChange}
                             />
                         </Input>
                     )}
                 />
-                {errors.username && (
-                    <FormControlError>
-                        <FormControlErrorIcon as={AlertCircleIcon} className="w-4 h-4 text-red-500"/>
-                        <FormControlErrorText className="text-red-500 text-sm mt-1">
-                            {errors.username.message}
-                        </FormControlErrorText>
-                    </FormControlError>
-                )}
+                <FormControlError>
+                    <FormControlErrorIcon as={AlertCircleIcon} className="w-4 h-4 text-red-500"/>
+                    <FormControlErrorText className="text-red-500 text-sm mt-1">
+                        {errors.username?.message}
+                    </FormControlErrorText>
+                </FormControlError>
+
             </FormControl>
 
             <FormControl
                 className="mb-4"
                 isInvalid={!!errors.password}
             >
-                {/*<FormControlLabel className="mb-2">*/}
-                {/*    <FormControlLabelText className="" size={"2xl"}>*/}
-                {/*        Password*/}
-                {/*    </FormControlLabelText>*/}
-                {/*</FormControlLabel>*/}
                 <Controller
                     control={control}
                     name="password"
                     render={({field: {onChange, value}}) => (
-                        <Input className="w-full" size={"xl"} variant={"rounded"}>
+                        <Input className="w-full rounded-full border-2" size={"2xl"} variant={"rounded"}>
                             <InputField
                                 secureTextEntry
-                                placeholder="Enter password"
+                                placeholder="Password"
                                 value={value}
                                 onChangeText={onChange}
                             />
                         </Input>
                     )}
                 />
-                {errors.password && (
-                    <FormControlError>
-                        <FormControlErrorIcon as={AlertCircleIcon} className="w-4 h-4 text-red-500"/>
-                        <FormControlErrorText className="text-red-500 text-sm mt-1">
-                            {errors.password.message}
-                        </FormControlErrorText>
-                    </FormControlError>
-                )}
+                <FormControlError>
+                    <FormControlErrorIcon as={AlertCircleIcon} className="w-4 h-4 text-red-500"/>
+                    <FormControlErrorText className="text-red-500 text-sm mt-1">
+                        {errors.password?.message}
+                    </FormControlErrorText>
+                </FormControlError>
+
             </FormControl>
             {isError && (
                 <Text className={"text-red-500 text-xl mb-4"}>
@@ -98,9 +87,8 @@ export default function LoginForm() {
                 </Text>
             )}
             <Button
-                style={{width: 100}}
-                className={"w-[100px]"}
-                size="lg"
+                className={"w-full rounded-full bg-success-500"}
+                size="2xl"
                 variant="solid"
                 action="primary"
                 onPress={handleSubmit(onSubmit)}

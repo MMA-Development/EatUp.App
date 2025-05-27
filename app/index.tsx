@@ -1,10 +1,9 @@
 import LoginForm from "@/features/auth/components/login-form";
-import {Box} from "@/components/ui/box";
 import {useAppSelector} from "@/store/hooks";
-import {Link, Redirect, useRouter} from "expo-router";
-import {Image} from "@/components/ui/image";
-import {SafeAreaView, TouchableOpacity, View} from "react-native";
+import {Redirect, useRouter} from "expo-router";
+import {ImageBackground, KeyboardAvoidingView, Platform, TouchableOpacity, View} from "react-native";
 import {Text} from "@/components/ui/text";
+import {HStack} from "@/components/ui/hstack";
 
 export default function LoginScreen() {
     const router = useRouter();
@@ -15,23 +14,36 @@ export default function LoginScreen() {
     }
 
     return (
-        <SafeAreaView className="bg-background-0 flex-1">
-            <View className="flex-1 justify-center items-center px-4">
-                <Image
-                    size="xl"
-                    className="aspect-[620/208] w-full max-w-[620px]"
-                    source={require("../assets/images/logo.png")}
-                    alt="image"
-                />
-                <LoginForm />
-            </View>
-
-            <TouchableOpacity
-                onPress={() => router.replace("/signup")}
-                className="items-center pb-6"
+        <KeyboardAvoidingView
+            behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+            className="flex-1"
+        >
+            {/* Background image */}
+            <ImageBackground
+                source={require("../assets/images/bg.jpg")}
+                resizeMode="cover"
+                className="w-full h-[500px] absolute top-0 left-0 right-0"
             >
-                <Text className="text-blue-400">Har du ikke en konto, registrer her!</Text>
-            </TouchableOpacity>
-        </SafeAreaView>
+                <View className="flex-1 bg-black/10" />
+            </ImageBackground>
+
+            {/* Content overlays image */}
+            <View className="flex-1 justify-end">
+                <View className="bg-white rounded-t-3xl px-6 pt-12 pb-10 w-full">
+                    <Text className="text-2xl font-bold ml-8 mb-6">Log ind</Text>
+
+                    <View className="items-center">
+                        <LoginForm />
+
+                        <HStack className="justify-center mt-10">
+                            <Text className="font-semibold text-lg">Har du ikke en konto?</Text>
+                            <TouchableOpacity onPress={() => router.replace("/signup")}>
+                                <Text className="text-blue-500 text-lg font-semibold"> Opret dig</Text>
+                            </TouchableOpacity>
+                        </HStack>
+                    </View>
+                </View>
+            </View>
+        </KeyboardAvoidingView>
     )
 }
