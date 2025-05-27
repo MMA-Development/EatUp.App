@@ -23,7 +23,7 @@ export default function SearchScreen() {
 
     const [searchValue, setSearchValue] = useDebouncedState('', 300);
 
-    const {latitude, longitude, permissionStatus, requestLocationPermission} = useLocation();
+    const {latitude, longitude} = useLocation();
 
 
     // if (!latitude || !longitude) {
@@ -120,8 +120,8 @@ export default function SearchScreen() {
                     </View>
                 ) : (
                     // Map View
-                    Platform.OS !== 'web' && (
-                        <MapView style={styles.map} showsUserLocation={true} showsMyLocationButton={true}>
+                    Platform.OS !== 'web' && latitude && longitude && (
+                        <MapView style={styles.map} showsUserLocation={true} showsMyLocationButton={true} initialRegion={{longitude, latitude, latitudeDelta: 0.05, longitudeDelta: 0.05}}>
                             {data?.items.map((marker, index) => (
                                 <Marker key={index}
                                         coordinate={{latitude: marker.latitude, longitude: marker.longitude}}>
