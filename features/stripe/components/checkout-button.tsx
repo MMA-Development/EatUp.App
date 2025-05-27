@@ -5,6 +5,7 @@ import {useStripe} from "@stripe/stripe-react-native";
 import {useFetchPaymentSheetParamsMutation} from "@/features/stripe/api/fetch-payment-sheet-params";
 import {useAppSelector} from "@/store/hooks";
 import {selectStripeUserId} from "@/features/auth/store";
+import {router} from "expo-router";
 
 export default function CheckoutButton() {
     const {initPaymentSheet, presentPaymentSheet} = useStripe();
@@ -50,7 +51,8 @@ export default function CheckoutButton() {
         if (error) {
             Alert.alert(`Error code: ${error.code}`, error.message);
         } else {
-            Alert.alert("Success", "Din ordrer er nu betalt!");
+            // TODO go to the specific order instead of just the profile page
+            router.replace('/profile')
         }
     };
 
@@ -62,6 +64,8 @@ export default function CheckoutButton() {
 
     return (
         <MyButton
+            className={"w-full rounded-2xl bg-success-500"}
+            size={'xl'}
             variant="solid"
             disabled={!paymentSheetReady || isLoading}
             onPress={openPaymentSheet}
