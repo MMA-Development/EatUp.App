@@ -65,7 +65,7 @@ export default function CheckoutButton() {
 
     return (
         <MyButton
-            className={"w-full rounded-2xl bg-success-500"}
+            className={"w-full rounded-2xl bg-green-500"}
             size={'xl'}
             variant="solid"
             disabled={!paymentSheetReady || isLoading}

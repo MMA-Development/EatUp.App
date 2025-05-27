@@ -1,6 +1,5 @@
 import {PropsWithChildren, useMemo} from "react";
 import {Button, ButtonText, IButtonProps} from "@/components/ui/button";
-import {triggerSoftHaptic} from "@/lib/haptics";
 
 export function MyButton({children, ...props}: PropsWithChildren & IButtonProps) {
 

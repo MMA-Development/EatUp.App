@@ -87,7 +87,7 @@ export default function LoginForm() {
                 </Text>
             )}
             <Button
-                className={"w-full rounded-2xl bg-success-500"}
+                className={"w-full rounded-2xl bg-green-500"}
                 size="2xl"
                 variant="solid"
                 action="primary"
