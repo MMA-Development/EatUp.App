@@ -35,3 +35,28 @@ export const MealsResponseSchema = z.object({
 })
 
 export type MealsResponse = z.infer<typeof MealsResponseSchema>
+
+
+export const CategoriesResponseSchema = z.object({
+    items: z.array(
+        z.object({
+            name: z.string(),
+            meals: z.array(z.unknown()),
+            id: z.string(),
+            deletedAt: z.null(),
+            createdAt: z.string(),
+            updatedAt: z.string()
+        })
+    ),
+    totalCount: z.number(),
+    page: z.number()
+})
+
+export type CategoriesResponse = z.infer<typeof CategoriesResponseSchema>
+
+export const CategoriesPayloadSchema = z.object({
+    take: z.number(),
+    skip: z.number(),
+})
+
+export type CategoriesPayload = z.infer<typeof CategoriesPayloadSchema>

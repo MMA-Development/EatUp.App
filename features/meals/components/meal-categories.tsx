@@ -5,18 +5,26 @@ import {useLocalSearchParams, useRouter} from "expo-router";
 import {twMerge} from "tailwind-merge";
 import clsx from "clsx";
 import {cn} from "@/lib/cn";
+import {useGetMealsQuery} from "@/features/meals/api/get-meals";
+import {useGetCategoriesQuery} from "@/features/meals/api/get-categories";
 
-const categories = [
-    "Alt",
-    "Morgenmad",
-    "Aftensmad",
-    "Slik",
-    "Vegetar",
-    "Vegansk"
-];
+// const categories = [
+//     "Alt",
+//     "Morgenmad",
+//     "Aftensmad",
+//     "Slik",
+//     "Vegetar",
+//     "Vegansk"
+// ];
 
 export default function MealCategories() {
     const router = useRouter();
+
+    const {data: categories, isLoading: categoriesIsLoading} = useGetCategoriesQuery({
+        skip: 0,
+        take: 10,
+    });
+
     const { categories: urlCategories } = useLocalSearchParams<{ categories?: string }>();
 
     // Convert URL param to array safely
@@ -70,16 +78,16 @@ export default function MealCategories() {
                 showsHorizontalScrollIndicator={false}
             >
                 <View className="px-4 gap-2 flex-row">
-                    {categories.map(category => (
+                    {categories?.items.map(category => (
                         <MyButton
-                            key={category}
+                            key={category.id}
                             className={cn("rounded-full", {
-                                "bg-emerald-500 text-white": selected.includes(category)
+                                "bg-emerald-500 text-white": selected.includes(category.name)
                             })}
                             action={"secondary"}
-                            onPress={() => toggleCategory(category)}
+                            onPress={() => toggleCategory(category.name)}
                         >
-                            {category}
+                            {category.name}
                         </MyButton>
                     ))}
                 </View>
