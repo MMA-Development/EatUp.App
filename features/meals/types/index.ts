@@ -30,7 +30,9 @@ export const MealsPayloadSchema = z.object({
     take: z.number(),
     skip: z.number(),
     search: z.string(),
-    categories: z.array(z.string())
+    categories: z.array(z.string()),
+    ascending: z.boolean().nullable(),
+    sortBy: z.string().nullable(),
 })
 
 export type MealsPayload = z.infer<typeof MealsPayloadSchema>

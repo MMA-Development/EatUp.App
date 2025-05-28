@@ -44,7 +44,9 @@ export default function SearchScreen() {
         skip: 0,
         take: 10,
         search: searchValue,
-        categories: categories
+        categories: categories,
+        ascending: null,
+        sortBy: null,
     }, {
         refetchOnMountOrArgChange: true,
     });

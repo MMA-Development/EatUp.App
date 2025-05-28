@@ -1,12 +1,26 @@
-import {SafeAreaView, ScrollView, View} from "react-native";
+import {ActivityIndicator, SafeAreaView, ScrollView, View} from "react-native";
 import {MyButton} from "@/components/ui/my-button";
 import MealCarousel from "@/features/meals/components/meal-carousel";
 import {Meal} from "@/features/meals/types";
 import MealCategories from "@/features/meals/components/meal-categories";
 import {useLocalSearchParams} from "expo-router";
 import {useEffect} from "react";
+import {useGetMealsQuery} from "@/features/meals/api/get-meals";
 
 export default function Screen() {
+
+    const {data: lastChanceMeals, isLoading: mealsIsLoading} = useGetMealsQuery({
+        skip: 0,
+        take: 5,
+        search: "",
+        categories: [],
+        ascending: true,
+        sortBy: "lastAvailablePickup",
+    }, {
+        refetchOnMountOrArgChange: true,
+    });
+
+    console.log(lastChanceMeals)
 
     const meals: Meal[] = [{
         "id": "1",
@@ -83,7 +97,6 @@ export default function Screen() {
     return (
         <View className={"bg-background-0 flex-1"}>
             <SafeAreaView className=" max-h-full">
-                {/*Category Buttons*/}
                 {/*<MealCategories/>*/}
                 <ScrollView
                     showsVerticalScrollIndicator={false}
@@ -91,9 +104,16 @@ export default function Screen() {
                 >
                     {/* Carousels */}
                     <View className="px-4 gap-2">
-                        <MealCarousel title={"Anbefalinger"} meals={meals}/>
                         <MealCarousel title={"Favoritter"} meals={meals}/>
-                        <MealCarousel title={"Sidste Chance"} meals={meals}/>
+                        <MealCarousel title={"Anbefalinger"} meals={meals}/>
+                        {mealsIsLoading ? (
+                            <View className="flex flex-col items-center">
+                                <ActivityIndicator size="large" className="mt-4"/>
+                            </View>
+                        ): (
+                            <MealCarousel title={"Sidste Chance"} meals={lastChanceMeals!.items}/>
+                        )
+                        }
                     </View>
                 </ScrollView>
             </SafeAreaView>
