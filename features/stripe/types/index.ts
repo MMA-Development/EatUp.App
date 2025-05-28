@@ -9,11 +9,10 @@ export const PaymentSheetParamsResponseSchema = z.object({
 export type PaymentSheetParamsResponse = z.infer<typeof PaymentSheetParamsResponseSchema>
 
 export const PaymentSheetParamsPayloadSchema = z.object({
-    userName: z.string(),
-    foodPackageId: z.string(),
+    userId: z.string(),
+    foodPackageId: z.string().uuid(),
     price: z.number(),
-    foodPackageTitle: z.string(),
-    stripeCustomerId: z.string(),
-    vendorId: z.string().uuid()
+    vendorId: z.string().uuid(),
+    quantity: z.number()
 })
 export type PaymentSheetParamsPayload = z.infer<typeof PaymentSheetParamsPayloadSchema>

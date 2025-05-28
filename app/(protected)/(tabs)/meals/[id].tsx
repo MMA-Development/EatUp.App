@@ -7,23 +7,35 @@ import {ArrowLeftIcon, FavouriteIcon, Icon} from "@/components/ui/icon";
 import moment from "moment";
 import {router} from 'expo-router';
 import CheckoutButton from "@/features/stripe/components/checkout-button";
+import {useLocalSearchParams} from 'expo-router';
+import {useGetMealQuery} from "@/features/meals/api/get-meal";
 
 export default function MealDetailScreen() {
-    // Dette skulle selvfølgelig komme fra en API eller state
-    const meal = {
-        "id": "1",
-        "vendorId": "ba6c0306-6506-4d92-d2e7-08dd8d31d017",
-        "vendorName": "Coop365",
-        "title": "Rundstykker Morgenmad og Aftensmad",
-        "originalPrice": 60,
-        "price": 30,
-        "description": "Friskbagt rundstykker lavet med kærlighed. Vores bagere står tidligt op for at sikre den bedste kvalitet til dig. Perfekt til både morgenmad og aftensmad.",
-        "quantity": 5,
-        "maxOrderQuantity": 1,
-        "firstAvailablePickup": "2025-05-07T06:40:26.522",
-        "lastAvailablePickup": "2025-05-07T13:40:26.522",
-        "categories": ["Morgenmad", "Aftensmad"]
-    };
+    const {id} = useLocalSearchParams<{ id: string }>();
+
+    const {data: meal, isLoading, error} = useGetMealQuery(id!, {
+        skip: !id,
+    })
+
+    if (isLoading || !id) {
+        return (
+            <View className="flex-1 bg-background-0 justify-center items-center">
+                <Text>Indlæser måltid...</Text>
+            </View>
+        );
+    }
+
+    if (error || !meal) {
+        return (
+            <View className="flex-1 bg-background-0 justify-center items-center p-4">
+                <Text className="text-center mb-4">Beklager, men vi kunne ikke finde det ønskede måltid.</Text>
+                <MyButton action="secondary" onPress={() => router.back()}>
+                    Gå tilbage
+                </MyButton>
+            </View>
+        );
+    }
+
 
     return (
         <View className="flex-1 bg-background-0">
@@ -79,7 +91,7 @@ export default function MealDetailScreen() {
                     <View className="flex-row flex-wrap gap-2 mt-4">
                         {meal.categories.map((category, index) => (
                             <View key={index} className="bg-indicator-info px-3 py-1 rounded-full">
-                                <Text size="sm" className="text-primary-900">{category}</Text>
+                                <Text size="sm" className="text-primary-900">{category.name}</Text>
                             </View>
                         ))}
                     </View>
@@ -109,7 +121,7 @@ export default function MealDetailScreen() {
                 {/*    Reserver for {meal.price} kr*/}
                 {/*</MyButton>*/}
                 {Platform.OS !== 'web' &&
-                    <CheckoutButton/>
+                    <CheckoutButton meal={meal}/>
                 }
 
             </View>

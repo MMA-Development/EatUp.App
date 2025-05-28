@@ -20,7 +20,16 @@ export default function Screen() {
         "maxOrderQuantity": 1,
         "firstAvailablePickup": "2025-05-07T06:40:26.522",
         "lastAvailablePickup": "2025-05-07T13:40:26.522",
-        "categories": ["Morgenmad", "Aftensmad"]
+        "categories": [
+            {
+                "name": "Morgenmad",
+                "meals": [],
+                "id": "3fa4cbc1-40c6-4a0f-1e2d-08dd9daf9e40",
+                "deletedAt": null,
+                "createdAt": "2025-05-28T06:19:35.7121841",
+                "updatedAt": "2025-05-28T08:15:07.803538"
+            }
+        ]
     },
         {
             "id": "1",
@@ -34,7 +43,16 @@ export default function Screen() {
             "maxOrderQuantity": 1,
             "firstAvailablePickup": "2025-05-07T06:40:26.522",
             "lastAvailablePickup": "2025-05-07T13:40:26.522",
-            "categories": ["Slik"]
+            "categories": [
+                {
+                    "name": "Morgenmad",
+                    "meals": [],
+                    "id": "3fa4cbc1-40c6-4a0f-1e2d-08dd9daf9e40",
+                    "deletedAt": null,
+                    "createdAt": "2025-05-28T06:19:35.7121841",
+                    "updatedAt": "2025-05-28T08:15:07.803538"
+                }
+            ]
         },
         {
             "id": "1",
@@ -48,7 +66,16 @@ export default function Screen() {
             "maxOrderQuantity": 1,
             "firstAvailablePickup": "2025-05-07T06:40:26.522",
             "lastAvailablePickup": "2025-05-07T13:40:26.522",
-            "categories": ["Vegansk"]
+            "categories": [
+                {
+                    "name": "Morgenmad",
+                    "meals": [],
+                    "id": "3fa4cbc1-40c6-4a0f-1e2d-08dd9daf9e40",
+                    "deletedAt": null,
+                    "createdAt": "2025-05-28T06:19:35.7121841",
+                    "updatedAt": "2025-05-28T08:15:07.803538"
+                }
+            ]
         },
     ]
 
