@@ -12,7 +12,16 @@ export const MealSchema = z.object({
     maxOrderQuantity: z.number(),
     firstAvailablePickup: z.string(),
     lastAvailablePickup: z.string(),
-    categories: z.array(z.string()).nullable()
+    categories: z.array(
+        z.object({
+            name: z.string(),
+            meals: z.array(z.unknown()),
+            id: z.string(),
+            deletedAt: z.null(),
+            createdAt: z.string(),
+            updatedAt: z.string()
+        })
+    )
 })
 
 export type Meal = z.infer<typeof MealSchema>
@@ -20,7 +29,8 @@ export type Meal = z.infer<typeof MealSchema>
 export const MealsPayloadSchema = z.object({
     take: z.number(),
     skip: z.number(),
-    search: z.string()
+    search: z.string(),
+    categories: z.array(z.string())
 })
 
 export type MealsPayload = z.infer<typeof MealsPayloadSchema>

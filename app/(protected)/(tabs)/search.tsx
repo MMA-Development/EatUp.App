@@ -19,7 +19,7 @@ import { SearchIcon } from '@/components/ui/icon';
 export default function SearchScreen() {
     const [selectedView, setSelectedView] = useState(0);
     const {top} = useSafeAreaInsets();
-    const {categories} = useLocalSearchParams<{ categories?: string }>();
+    const {categories} = useLocalSearchParams<{ categories: string[] }>();
 
     const [searchValue, setSearchValue] = useDebouncedState('', 300);
 
@@ -44,6 +44,7 @@ export default function SearchScreen() {
         skip: 0,
         take: 10,
         search: searchValue,
+        categories: categories
     }, {
         refetchOnMountOrArgChange: true,
     });

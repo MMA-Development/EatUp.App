@@ -1,106 +1,74 @@
-import { ScrollView, View, Text } from "react-native";
-import {useEffect, useState} from "react";
+import { ScrollView, View } from "react-native";
+import { useState } from "react";
 import { MyButton } from "@/components/ui/my-button";
-import {useLocalSearchParams, useRouter} from "expo-router";
-import {twMerge} from "tailwind-merge";
-import clsx from "clsx";
-import {cn} from "@/lib/cn";
-import {useGetMealsQuery} from "@/features/meals/api/get-meals";
-import {useGetCategoriesQuery} from "@/features/meals/api/get-categories";
-
-// const categories = [
-//     "Alt",
-//     "Morgenmad",
-//     "Aftensmad",
-//     "Slik",
-//     "Vegetar",
-//     "Vegansk"
-// ];
+import { useLocalSearchParams, useRouter } from "expo-router";
+import { cn } from "@/lib/cn";
+import { useGetCategoriesQuery } from "@/features/meals/api/get-categories";
 
 export default function MealCategories() {
     const router = useRouter();
 
-    const {data: categories, isLoading: categoriesIsLoading} = useGetCategoriesQuery({
-        skip: 0,
-        take: 10,
-    });
+    // Grab any existing category IDs from URL (as a string[]), or default to empty array
+    const {
+        categories: urlCategories = [],
+    } = useLocalSearchParams<{ categories?: string[] }>();
 
-    const { categories: urlCategories } = useLocalSearchParams<{ categories?: string }>();
+    // Initialize selected IDs from URL params
+    const [selected, setSelected] = useState<string[]>(urlCategories);
 
-    // Convert URL param to array safely
-    const parseCategories = (value?: string): string[] => {
-        if (!value) return ["Alt"];
-        try {
-            const parsed = JSON.parse(value);
-            return Array.isArray(parsed) ? parsed : ["Alt"];
-        } catch {
-            return ["Alt"];
-        }
+    // Fetch up to 10 categories
+    const { data } = useGetCategoriesQuery({ skip: 0, take: 10 });
+    const categories = data?.items || [];
+
+    // Helper to sync state → URL
+    const updateParams = (ids: string[]) => {
+        router.setParams({ categories: ids });
     };
 
-    const [selected, setSelected] = useState<string[]>(parseCategories(urlCategories));
+    // Toggle a single category ID on/off
+    const toggle = (id: string) => {
+        const next = selected.includes(id)
+            ? selected.filter((x) => x !== id)
+            : [...selected, id];
 
-    // Update state when URL param changes
-    useEffect(() => {
-        setSelected(parseCategories(urlCategories));
-    }, [urlCategories]);
-
-    const toggleCategory = (category: string) => {
-        let updated: string[];
-
-        if (category === "Alt") {
-            updated = ["Alt"];
-        } else {
-            if (selected.includes(category)) {
-                updated = selected.filter(item => item !== category);
-            } else {
-                updated = [...selected.filter(item => item !== "Alt"), category];
-            }
-
-            if (updated.length === 0) {
-                updated = ["Alt"];
-            }
-        }
-
-        setSelected(updated);
-
-        // Update URL with encoded array
-        router.setParams({
-            categories: JSON.stringify(updated)
-        });
+        setSelected(next);
+        updateParams(next);
     };
 
-    // console.log(selected)
+    // Clear all selections
+    const clearAll = () => {
+        setSelected([]);
+        updateParams([]);
+    };
+
     return (
-        <View className={"py-4 gap-2"}>
-            <ScrollView
-                horizontal
-                showsHorizontalScrollIndicator={false}
-            >
-                <View className="px-4 gap-2 flex-row">
-                    {categories?.items.map(category => (
+        <View className="py-4 gap-2">
+            <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+                <View className="px-4 flex-row gap-2">
+                    <MyButton
+                        className={cn("rounded-full", {
+                            "bg-emerald-500 text-white": selected.length === 0,
+                        })}
+                        action="secondary"
+                        onPress={clearAll}
+                    >
+                        All
+                    </MyButton>
+
+                    {categories.map((cat) => (
                         <MyButton
-                            key={category.id}
+                            key={cat.id}
                             className={cn("rounded-full", {
-                                "bg-emerald-500 text-white": selected.includes(category.name)
+                                "bg-emerald-500 text-white": selected.includes(cat.id),
                             })}
-                            action={"secondary"}
-                            onPress={() => toggleCategory(category.name)}
+                            action="secondary"
+                            onPress={() => toggle(cat.id)}
                         >
-                            {category.name}
+                            {cat.name}
                         </MyButton>
                     ))}
                 </View>
             </ScrollView>
-
-            {/*<ScrollView horizontal={true} className="px-4 gap-4">*/}
-            {/*    {selected.map((category, index) =>*/}
-            {/*        <Badge key={index} size={"md"} action={"muted"} >*/}
-            {/*            <BadgeText>{category}</BadgeText>*/}
-            {/*            <BadgeIcon as={CheckIcon}/>*/}
-            {/*        </Badge>*/}
-            {/*    )}*/}
-            {/*</ScrollView>*/}
         </View>
     );
 }
