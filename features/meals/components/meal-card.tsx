@@ -36,7 +36,7 @@ export default function MealCard({meal}: MealCardProps) {
 
                 <Image
                     source={{
-                        uri: "https://gluestack.github.io/public-blog-video-assets/mountains.png",
+                        uri: `https://eatup.blob.core.windows.net${meal.imageUrl}`,
                     }}
                     alt="image"
                     className="w-full h-32 rounded-t-2xl "

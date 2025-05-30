@@ -56,7 +56,7 @@ export default function MealDetailScreen() {
                 <Image
                     className="w-full h-full"
                     source={{
-                        uri: "https://f.nordiskemedier.dk/2bqd8imymcjkxk7b_660_368.jpg",
+                        uri: `https://eatup.blob.core.windows.net${meal.imageUrl}`,
                     }}
                     alt={meal.title}
                 />

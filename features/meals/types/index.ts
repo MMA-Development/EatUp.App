@@ -10,6 +10,7 @@ export const MealSchema = z.object({
     description: z.string(),
     quantity: z.number(),
     maxOrderQuantity: z.number(),
+    imageUrl: z.string(),
     firstAvailablePickup: z.string(),
     lastAvailablePickup: z.string(),
     available: z.number(),
