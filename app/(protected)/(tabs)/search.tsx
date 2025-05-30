@@ -15,6 +15,7 @@ import MealList from "@/features/meals/components/meal-list";
 import {useGetMealsQuery} from "@/features/meals/api/get-meals";
 import {useLocation} from '@/features/map/hooks/useLocation';
 import { SearchIcon } from '@/components/ui/icon';
+import Popup from "@/features/map/components/popup";
 
 export default function SearchScreen() {
     const [selectedView, setSelectedView] = useState(0);
@@ -25,6 +26,9 @@ export default function SearchScreen() {
 
     const {latitude, longitude} = useLocation();
 
+    const [showDrawer, setShowDrawer] = useState(false)
+    const openDrawer = () => setShowDrawer(true)
+    const closeDrawer = () => setShowDrawer(false)
 
     // if (!latitude || !longitude) {
     //     return <View>Indlæser lokation...</View>;
@@ -127,14 +131,11 @@ export default function SearchScreen() {
                         <MapView style={styles.map} showsUserLocation={true} showsMyLocationButton={true} initialRegion={{longitude, latitude, latitudeDelta: 0.05, longitudeDelta: 0.05}}>
                             {data?.items.map((marker, index) => (
                                 <Marker key={index}
+                                        onPress={() => openDrawer()}
                                         coordinate={{latitude: marker.latitude, longitude: marker.longitude}}>
-                                    <Callout>
-                                        <View className={"m-2"}>
-                                            <Text>{marker.name}</Text>
-                                        </View>
-                                    </Callout>
                                 </Marker>
                             ))}
+                    <Popup isOpen={showDrawer} closeDrawer={closeDrawer} />
                         </MapView>)
                 )}
             </View>

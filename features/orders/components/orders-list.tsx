@@ -1,4 +1,4 @@
-import {View} from "react-native";
+import {TouchableOpacity, View} from "react-native";
 import {Text} from "@/components/ui/text";
 import {VStack} from "@/components/ui/vstack";
 import {HStack} from "@/components/ui/hstack";
@@ -7,6 +7,8 @@ import {useState, useCallback} from "react";
 import {Button, ButtonText} from "@/components/ui/button";
 import {ActivityIndicator} from "react-native";
 import {FlashList} from "@shopify/flash-list";
+import {triggerSoftHaptic} from "@/lib/haptics";
+import {router} from "expo-router";
 
 
 const ITEMS_PER_PAGE = 5;
@@ -30,7 +32,16 @@ export function OrdersList() {
         }
     }, [isFetching, hasMore]);
 
+    const handlePress = async () => {
+        await triggerSoftHaptic();
+        // router.push({
+        //     pathname: "/(protected)/(tabs)/meals/[id]",
+        //     params: { id: meal.id }
+        // })
+    };
+
     const renderItem = useCallback(({item: order} : any) => (
+        <TouchableOpacity onPress={handlePress}>
         <View
             className="bg-background-0 rounded-2xl p-5 border border-background-100 mb-4"
         >
@@ -53,6 +64,7 @@ export function OrdersList() {
                 </VStack>
             </HStack>
         </View>
+            </TouchableOpacity>
     ), []);
     if (isLoading) {
         return (

@@ -108,13 +108,16 @@ export default function Screen() {
                     <View className="px-4 gap-2">
                         <MealCarousel title={"Favoritter"} meals={meals}/>
                         <MealCarousel title={"Anbefalinger"} meals={meals}/>
-                        {mealsIsLoading ? (
+                        {mealsIsLoading && (
                             <View className="flex flex-col items-center">
                                 <ActivityIndicator size="large" className="mt-4"/>
                             </View>
-                        ): (
-                            <MealCarousel title={"Sidste Chance"} meals={lastChanceMeals!.items}/>
                         )
+                        }
+                        {lastChanceMeals &&
+                            (
+                                <MealCarousel title={"Sidste Chance"} meals={lastChanceMeals!.items}/>
+                            )
                         }
                     </View>
                 </ScrollView>
