@@ -12,6 +12,7 @@ export const MealSchema = z.object({
     maxOrderQuantity: z.number(),
     firstAvailablePickup: z.string(),
     lastAvailablePickup: z.string(),
+    available: z.number(),
     categories: z.array(
         z.object({
             name: z.string(),

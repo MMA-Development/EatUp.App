@@ -40,7 +40,7 @@ export default function SearchScreen() {
         }
     }, [latitude, longitude]);
 
-    const {data: meals, isLoading: mealsIsLoading} = useGetMealsQuery({
+    const {data: meals, isLoading: mealsIsLoading, refetch} = useGetMealsQuery({
         skip: 0,
         take: 10,
         search: searchValue,
@@ -48,7 +48,7 @@ export default function SearchScreen() {
         ascending: null,
         sortBy: null,
     }, {
-        refetchOnMountOrArgChange: true,
+        refetchOnMountOrArgChange: true
     });
 
     const [params, setParams] = useState({

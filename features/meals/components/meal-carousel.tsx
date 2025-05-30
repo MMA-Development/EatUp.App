@@ -21,6 +21,9 @@ export default function MealCarousel({title, meals}: MealCarouselProps) {
                 </Link>
             </View>
             <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
+                {!meals && (
+                    <Text>Ingen måltider</Text>
+                )}
                 {meals.map((meal, index) =>
                     <MealCard key={index} meal={meal}/>
                 )}

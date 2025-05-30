@@ -42,7 +42,7 @@ export default function MealCard({meal}: MealCardProps) {
                     className="w-full h-32 rounded-t-2xl "
                 />
                 <View className="p-4 flex-col">
-                    <Heading size="lg" className="text-primary-900">{meal.vendorName} | Grønnegade 15</Heading>
+                    <Heading size="lg" className="text-primary-900">{meal.vendorName}</Heading>
                     <Text size="md" className="text-primary-700">{meal.title}</Text>
 
                     <View className="flex-row justify-between items-center">

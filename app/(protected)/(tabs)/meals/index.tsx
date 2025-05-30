@@ -20,7 +20,6 @@ export default function Screen() {
         refetchOnMountOrArgChange: true,
     });
 
-    console.log(lastChanceMeals)
 
     const meals: Meal[] = [{
         "id": "1",
@@ -34,6 +33,7 @@ export default function Screen() {
         "maxOrderQuantity": 1,
         "firstAvailablePickup": "2025-05-07T06:40:26.522",
         "lastAvailablePickup": "2025-05-07T13:40:26.522",
+        "available": 5,
         "categories": [
             {
                 "name": "Morgenmad",
@@ -57,6 +57,7 @@ export default function Screen() {
             "maxOrderQuantity": 1,
             "firstAvailablePickup": "2025-05-07T06:40:26.522",
             "lastAvailablePickup": "2025-05-07T13:40:26.522",
+            "available": 5,
             "categories": [
                 {
                     "name": "Morgenmad",
@@ -80,6 +81,7 @@ export default function Screen() {
             "maxOrderQuantity": 1,
             "firstAvailablePickup": "2025-05-07T06:40:26.522",
             "lastAvailablePickup": "2025-05-07T13:40:26.522",
+            "available": 5,
             "categories": [
                 {
                     "name": "Morgenmad",

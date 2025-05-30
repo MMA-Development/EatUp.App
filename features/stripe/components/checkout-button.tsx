@@ -10,10 +10,11 @@ import { MyButton } from "@/components/ui/my-button";
 import {Meal} from "@/features/meals/types";
 
 interface CheckoutButtonProps {
-    meal: Meal
+    meal: Meal,
+    quantity: string
 }
 
-export default function CheckoutButton({meal}: CheckoutButtonProps) {
+export default function CheckoutButton({meal, quantity}: CheckoutButtonProps) {
     const { initPaymentSheet, presentPaymentSheet } = useStripe();
     const customerId = useAppSelector(selectStripeUserId);
     const user = useAppSelector(selectUser);
@@ -32,10 +33,10 @@ export default function CheckoutButton({meal}: CheckoutButtonProps) {
         try {
             const response = await fetchParams({
                 foodPackageId: meal.id,
-                price: meal.price,
+                price: meal.price * Number(quantity),
                 vendorId: meal.vendorId,
                 // Skal laves dynamisk og med rigtig data
-                quantity: 1,
+                quantity: Number(quantity),
                 userId: customerId!
             }).unwrap();
 

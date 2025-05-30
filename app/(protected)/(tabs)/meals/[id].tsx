@@ -9,10 +9,18 @@ import {router} from 'expo-router';
 import CheckoutButton from "@/features/stripe/components/checkout-button";
 import {useLocalSearchParams} from 'expo-router';
 import {useGetMealQuery} from "@/features/meals/api/get-meal";
+import {
+    Select, SelectBackdrop, SelectContent,
+    SelectDragIndicator, SelectDragIndicatorWrapper, SelectInput, SelectItem, SelectPortal, SelectTrigger, SelectIcon
+} from "@/components/ui/select";
+import {ChevronDownIcon} from "@/components/ui/icon";
+import {useState} from "react";
 
 export default function MealDetailScreen() {
     const {id} = useLocalSearchParams<{ id: string }>();
 
+    const [quantity, setQuantity] = useState<string>("1");
+    console.log(quantity)
     const {data: meal, isLoading, error} = useGetMealQuery(id!, {
         skip: !id,
     })
@@ -36,6 +44,10 @@ export default function MealDetailScreen() {
         );
     }
 
+    const generateQuantityOptions = (available: number, maxOrder: number) => {
+        const maxSelectable = Math.min(available, maxOrder);
+        return Array.from({ length: maxSelectable }, (_, i) => i + 1);
+    };
 
     return (
         <View className="flex-1 bg-background-0">
@@ -106,9 +118,32 @@ export default function MealDetailScreen() {
                     <View className="bg-amber-100 p-4 rounded-xl mt-4">
                         <Text size="md" className="font-semibold">Antal tilgængelige portioner</Text>
                         <Text size="md" className="text-gray-600">
-                            {meal.quantity} stk. (Max {meal.maxOrderQuantity} pr. ordre)
+                            {meal.available} stk. (Max {meal.maxOrderQuantity} pr. ordre)
                         </Text>
                     </View>
+                    <Select className={"self-center p-4"} defaultValue={"1"} onValueChange={(e) => setQuantity(e)}>
+                        <SelectTrigger>
+                            <SelectInput />
+                            <SelectIcon as={ChevronDownIcon} />
+                        </SelectTrigger>
+                        <SelectPortal>
+                            <SelectBackdrop />
+                            <SelectContent>
+                                <SelectDragIndicatorWrapper>
+                                    <SelectDragIndicator />
+                                </SelectDragIndicatorWrapper>
+                                {generateQuantityOptions(meal.available, meal.maxOrderQuantity).map((num) => (
+                                    <SelectItem
+                                        key={num}
+                                        className="justify-center"
+                                        label={num.toString()}
+                                        value={num.toString()}
+                                    />
+                                ))}
+
+                            </SelectContent>
+                        </SelectPortal>
+                    </Select>
                 </View>
 
                 {/* Padding for button */}
@@ -121,7 +156,7 @@ export default function MealDetailScreen() {
                 {/*    Reserver for {meal.price} kr*/}
                 {/*</MyButton>*/}
                 {Platform.OS !== 'web' &&
-                    <CheckoutButton meal={meal}/>
+                    <CheckoutButton meal={meal} quantity={quantity}/>
                 }
 
             </View>
