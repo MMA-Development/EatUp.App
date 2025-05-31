@@ -34,10 +34,9 @@ export function OrdersList() {
 
     const handlePress = async () => {
         await triggerSoftHaptic();
-        // router.push({
-        //     pathname: "/(protected)/(tabs)/meals/[id]",
-        //     params: { id: meal.id }
-        // })
+        router.push({
+            pathname: "/(protected)/order-pickup",
+        })
     };
 
     const renderItem = useCallback(({item: order} : any) => (

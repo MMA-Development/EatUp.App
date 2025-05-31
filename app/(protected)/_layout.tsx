@@ -22,6 +22,14 @@ export default function ProtectedLayout() {
                 },
                 headerTintColor: colorScheme === 'dark' ? '#ffffff' : '#000000',
             }}/>
+            <Stack.Screen name="order-pickup" options={{animation: "slide_from_right", title: "Pickup", headerStyle: {
+                    backgroundColor: colorScheme === 'dark' ? '#171717' : '#ffffff',
+                },
+                contentStyle: {
+                    backgroundColor: colorScheme === 'dark' ? '#171717' : '#ffffff',
+                },
+                headerTintColor: colorScheme === 'dark' ? '#ffffff' : '#000000',
+            }}/>
         </Stack>
     )
 }
