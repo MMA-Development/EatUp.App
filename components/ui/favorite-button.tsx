@@ -3,15 +3,23 @@ import {TouchableOpacity} from "react-native";
 import {useState} from "react";
 
 export default function FavoriteButton() {
-    const [color, setColor] = useState<string>("gray")
+    const [isFavorite, setIsFavorite] = useState(false);
+
+
+
+    const handlePress = () => {
+        setIsFavorite(!isFavorite);
+    };
 
     return (
-        <TouchableOpacity onPress={() => console.log("asd")}>
+        <TouchableOpacity
+            onPress={handlePress}
+        >
             <Icon
                 as={FavouriteIcon}
-                size={"xl"}
-                color={color}
+                size="xl"
+                className={isFavorite ? "text-red-500" : "text-white"}
             />
         </TouchableOpacity>
-    )
+    );
 }

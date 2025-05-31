@@ -12,7 +12,9 @@ export default function MealList({meals}: MealListProps) {
                 {meals && meals.map((meal, index) =>
                     <MealCard key={index} meal={meal}/>
                 )}
-                {!meals && <Text>Ingen Måltider</Text>}
+                {!meals.length && (
+                    <Text className={"p-4"}>Ingen favoritter</Text>
+                )}
             </ScrollView>
     )
 }

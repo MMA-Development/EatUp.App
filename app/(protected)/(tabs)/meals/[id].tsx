@@ -15,6 +15,7 @@ import {
 } from "@/components/ui/select";
 import {ChevronDownIcon} from "@/components/ui/icon";
 import {useState} from "react";
+import FavoriteButton from "@/components/ui/favorite-button";
 
 export default function MealDetailScreen() {
     const {id} = useLocalSearchParams<{ id: string }>();
@@ -45,7 +46,7 @@ export default function MealDetailScreen() {
 
     const generateQuantityOptions = (available: number, maxOrder: number) => {
         const maxSelectable = Math.min(available, maxOrder);
-        return Array.from({ length: maxSelectable }, (_, i) => i + 1);
+        return Array.from({length: maxSelectable}, (_, i) => i + 1);
     };
 
     return (
@@ -59,14 +60,9 @@ export default function MealDetailScreen() {
                     }}
                     alt={meal.title}
                 />
-                <Pressable onPress={() => console.log("favorite")}
-                           className="bg-red-400/50 absolute top-12 right-4 z-10 rounded-full p-2">
-                    <Icon
-                        as={FavouriteIcon}
-                        size="xl"
-                        className={"text-white"}
-                    />
-                </Pressable>
+                <View className={"bg-gray-900/50 absolute top-12 right-4 z-10 rounded-full p-2"}>
+                    <FavoriteButton/>
+                </View>
                 <Pressable onPress={() => router.back()}
                            className="bg-gray-900/50 absolute top-12 left-4 z-10 rounded-full p-2">
                     <Icon
@@ -122,14 +118,14 @@ export default function MealDetailScreen() {
                     </View>
                     <Select className={"self-center p-4"} defaultValue={"1"} onValueChange={(e) => setQuantity(e)}>
                         <SelectTrigger>
-                            <SelectInput />
-                            <SelectIcon as={ChevronDownIcon} />
+                            <SelectInput/>
+                            <SelectIcon as={ChevronDownIcon}/>
                         </SelectTrigger>
                         <SelectPortal>
-                            <SelectBackdrop />
+                            <SelectBackdrop/>
                             <SelectContent>
                                 <SelectDragIndicatorWrapper>
-                                    <SelectDragIndicator />
+                                    <SelectDragIndicator/>
                                 </SelectDragIndicatorWrapper>
                                 {generateQuantityOptions(meal.available, meal.maxOrderQuantity).map((num) => (
                                     <SelectItem
