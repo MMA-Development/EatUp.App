@@ -35,6 +35,9 @@ export default function SearchScreen() {
     //     return <View>Indlæser lokation...</View>;
     // }
 
+    const [selectedVendor, setSelectedVendor] = useState<string>("");
+
+
     useEffect(() => {
         if (latitude && longitude) {
             setParams(prev => ({
@@ -130,11 +133,11 @@ export default function SearchScreen() {
                         <MapView style={styles.map} showsUserLocation={true} showsMyLocationButton={true} initialRegion={{longitude, latitude, latitudeDelta: 0.05, longitudeDelta: 0.05}}>
                             {data?.items.map((marker, index) => (
                                 <Marker key={index}
-                                        onPress={() => openDrawer()}
+                                        onPress={() => {setSelectedVendor(marker.id);openDrawer()}}
                                         coordinate={{latitude: marker.latitude, longitude: marker.longitude}}>
                                 </Marker>
                             ))}
-                    <Popup isOpen={showDrawer} closeDrawer={closeDrawer} />
+                    <Popup isOpen={showDrawer} closeDrawer={closeDrawer} vendorId={selectedVendor}/>
                         </MapView>)
                 )}
             </View>

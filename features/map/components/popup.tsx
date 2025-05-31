@@ -22,10 +22,11 @@ import {router} from "expo-router";
 interface PopupProps {
     isOpen: boolean
     closeDrawer: () => void
+    vendorId?: string;
 }
 
 
-export default function Popup({isOpen, closeDrawer}: PopupProps) {
+export default function Popup({isOpen, closeDrawer, vendorId}: PopupProps) {
     const handlePress = async (mealId: string) => {
         await triggerSoftHaptic();
         closeDrawer()
@@ -35,12 +36,12 @@ export default function Popup({isOpen, closeDrawer}: PopupProps) {
         })
     };
 
+
     const {data, isLoading} = useGetVendorMealsQuery({
         take: 5,
         skip: 0,
-        vendorId: "536f5bd0-4b89-4157-3ab5-08dd9ddb3c81"
+        vendorId: vendorId
     })
-
     return (
         <>
             <Drawer isOpen={isOpen} size="md" anchor="bottom" onClose={closeDrawer}>

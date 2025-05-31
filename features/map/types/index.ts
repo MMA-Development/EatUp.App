@@ -14,6 +14,7 @@ export type VendorsPayload = z.infer<typeof VendorsPayloadSchema>
 export const VendorsResponseSchema = z.object({
     items: z.array(
         z.object({
+            id: z.string(),
             name: z.string(),
             logo: z.string(),
             cvr: z.string(),
