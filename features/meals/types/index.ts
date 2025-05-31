@@ -23,7 +23,8 @@ export const MealSchema = z.object({
             createdAt: z.string(),
             updatedAt: z.string()
         })
-    )
+    ),
+    averageReview: z.number().nullable(),
 })
 
 export type Meal = z.infer<typeof MealSchema>
@@ -31,10 +32,11 @@ export type Meal = z.infer<typeof MealSchema>
 export const MealsPayloadSchema = z.object({
     take: z.number(),
     skip: z.number(),
-    search: z.string(),
-    categories: z.array(z.string()),
-    ascending: z.boolean().nullable(),
-    sortBy: z.string().nullable(),
+    search: z.string().optional(),
+    categories: z.array(z.string()).optional(),
+    ascending: z.boolean().optional(),
+    sortBy: z.string().optional(),
+    vendorId: z.string().optional()
 })
 
 export type MealsPayload = z.infer<typeof MealsPayloadSchema>

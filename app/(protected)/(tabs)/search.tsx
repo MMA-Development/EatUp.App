@@ -16,6 +16,7 @@ import {useGetMealsQuery} from "@/features/meals/api/get-meals";
 import {useLocation} from '@/features/map/hooks/useLocation';
 import { SearchIcon } from '@/components/ui/icon';
 import Popup from "@/features/map/components/popup";
+import {useGetVendorMealsQuery} from "@/features/meals/api/get-vendor-meals";
 
 export default function SearchScreen() {
     const [selectedView, setSelectedView] = useState(0);
@@ -49,8 +50,6 @@ export default function SearchScreen() {
         take: 10,
         search: searchValue,
         categories: categories,
-        ascending: null,
-        sortBy: null,
     }, {
         refetchOnMountOrArgChange: true
     });

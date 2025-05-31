@@ -20,7 +20,6 @@ export default function MealDetailScreen() {
     const {id} = useLocalSearchParams<{ id: string }>();
 
     const [quantity, setQuantity] = useState<string>("1");
-    console.log(quantity)
     const {data: meal, isLoading, error} = useGetMealQuery(id!, {
         skip: !id,
     })
