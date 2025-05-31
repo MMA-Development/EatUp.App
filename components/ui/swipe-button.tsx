@@ -61,7 +61,7 @@ const SwipeButton = ({ onComplete }:any) => {
     return (
         <View style={styles.container}>
             <Text style={styles.label}>
-                {confirmed ? 'Payment Confirmed ✅' : 'Swipe to Pay'}
+                {confirmed ? 'Afhentning bekræftet ✅' : 'Swipe for afhentning'}
             </Text>
             <View style={styles.swipeContainer}>
                 {/* Green fill track that grows */}
