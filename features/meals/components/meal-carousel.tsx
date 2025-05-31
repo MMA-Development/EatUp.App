@@ -22,7 +22,7 @@ export default function MealCarousel({title, meals}: MealCarouselProps) {
             </View>
             <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
                 {!meals.length && (
-                    <Text className={"p-4"}>Ingen måltider på sidst chance</Text>
+                    <Text className={"p-4"}>Ingen måltider</Text>
                 )}
                 {meals.map((meal, index) =>
                     <MealCard key={index} meal={meal}/>

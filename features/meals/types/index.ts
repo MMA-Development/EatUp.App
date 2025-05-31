@@ -17,11 +17,7 @@ export const MealSchema = z.object({
     categories: z.array(
         z.object({
             name: z.string(),
-            meals: z.array(z.unknown()),
             id: z.string(),
-            deletedAt: z.null(),
-            createdAt: z.string(),
-            updatedAt: z.string()
         })
     ),
     averageReview: z.number().nullable(),
@@ -57,11 +53,7 @@ export const CategoriesResponseSchema = z.object({
     items: z.array(
         z.object({
             name: z.string(),
-            meals: z.array(z.unknown()),
             id: z.string(),
-            deletedAt: z.null(),
-            createdAt: z.string(),
-            updatedAt: z.string()
         })
     ),
     totalCount: z.number(),
@@ -76,3 +68,11 @@ export const CategoriesPayloadSchema = z.object({
 })
 
 export type CategoriesPayload = z.infer<typeof CategoriesPayloadSchema>
+
+
+export const RecommendedMealsPayloadSchema = z.object({
+    take: z.number(),
+    skip: z.number(),
+})
+
+export type RecommendedMealsPayload = z.infer<typeof RecommendedMealsPayloadSchema>
