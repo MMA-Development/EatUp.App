@@ -146,7 +146,7 @@ export default function MealDetailScreen() {
 
                         {meal.averageReview ? (
                             <View className="absolute top-2 right-2 z-10 flex-row items-center justify-center">
-                                {[...Array(meal.averageReview)].map((_, index) => (
+                                {[...Array(Math.round(meal.averageReview))].map((_, index) => (
                                     <Icon
                                         key={index}
                                         as={StarIcon}
