@@ -3,7 +3,7 @@ import { Heading } from "@/components/ui/heading";
 import { Text } from "@/components/ui/text";
 import { Image } from "@/components/ui/image";
 import { TouchableOpacity, View } from "react-native";
-import { ArrowRightIcon, FavouriteIcon, Icon } from "@/components/ui/icon";
+import {ArrowRightIcon, FavouriteIcon, Icon, StarIcon} from "@/components/ui/icon";
 import { Meal } from "@/features/meals/types";
 import moment from "moment";
 import { router } from "expo-router";
@@ -29,6 +29,20 @@ export default function MealCard({ meal }: MealCardProps) {
         variant="elevated"
         className="border-[1px] relative min-w-96 my-2 mx-2 rounded-2xl p-0 border-background-100"
       >
+        {meal.averageReview ? (
+            <View className="absolute top-2 right-2 z-10 flex-row items-center justify-center">
+              <Text className="text-typography-0">{meal.averageReview.toString()}/5</Text>
+              {[...Array(5)].map((_, index) => (
+                  <Icon
+                      key={index}
+                      as={StarIcon}
+                      size="xl"
+                      className="text-yellow-300"
+                  />
+              ))}
+            </View>
+        ) : null}
+
         <Image
           source={{
             uri: `https://eatup.blob.core.windows.net${meal.imageUrl}`,
