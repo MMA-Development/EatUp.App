@@ -1,4 +1,5 @@
 import { meals } from '@/features/meals/api/get-meal'
+import { stats } from '@/features/user/api/get-stats'
 import { eatupApi } from '@/lib/api-slice'
 import * as Calendar from 'expo-calendar';
 import moment from 'moment'
@@ -27,6 +28,9 @@ export const stripe = eatupApi.injectEndpoints({
                           draft.available = draft.available - quantity
                       })
                     )
+                    dispatch(stats.endpoints.getStats.initiate(undefined,
+                      { forceRefetch: true }))
+
                     const { status } = await Calendar.requestCalendarPermissionsAsync();
                     if (status !== 'granted') {
                         return;
