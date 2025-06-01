@@ -6,6 +6,7 @@ import {Text} from "@/components/ui/text";
 import {HStack} from "@/components/ui/hstack";
 import {useLocation} from "@/features/map/hooks/useLocation";
 import {useEffect} from "react";
+import * as Calendar from 'expo-calendar';
 
 export default function LoginScreen() {
     const router = useRouter();
@@ -13,9 +14,15 @@ export default function LoginScreen() {
 
     const {permissionStatus, requestLocationPermission} = useLocation();
 
+    const [status, requestPermission] = Calendar.useRemindersPermissions();
+
+
     useEffect(() => {
         if (permissionStatus === 'undetermined') {
             void requestLocationPermission();
+        }
+        if (status?.status === 'undetermined') {
+            void requestPermission();
         }
     }, [permissionStatus]);
 
