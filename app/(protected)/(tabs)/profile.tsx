@@ -1,15 +1,23 @@
-import {Text} from "@/components/ui/text";
-import {SafeAreaView, View, ScrollView, Pressable} from "react-native";
-import {CalendarDaysIcon, GlobeIcon, Icon, SettingsIcon} from "@/components/ui/icon";
-import {HStack} from "@/components/ui/hstack";
-import {VStack} from "@/components/ui/vstack";
-import {useAppDispatch, useAppSelector} from "@/store/hooks";
-import {logout, selectStripeUserId} from "@/features/auth/store";
-import {MyButton} from "@/components/ui/my-button";
-import {useGetMeQuery} from "@/features/auth/api/me";
-import {useRouter} from "expo-router";
-import {OrdersList} from "@/features/orders/components/orders-list";
-import {useStripe} from "@stripe/stripe-react-native";
+import { HStack } from '@/components/ui/hstack';
+import {
+    CalendarDaysIcon,
+    GlobeIcon,
+    Icon,
+    SettingsIcon
+} from '@/components/ui/icon';
+import { MyButton } from '@/components/ui/my-button';
+import { Text } from '@/components/ui/text';
+import { useGetMeQuery } from '@/features/auth/api/me';
+import { logout, selectStripeUserId } from '@/features/auth/store';
+import { OrdersList } from '@/features/orders/components/orders-list';
+import { useGetStatsQuery } from '@/features/user/api/get-stats'
+import { BadgeCard } from '@/features/user/components/badge-card'
+import { useAppDispatch, useAppSelector } from '@/store/hooks';
+import { useStripe } from '@stripe/stripe-react-native';
+import { useRouter } from 'expo-router';
+import { Banknote, PiggyBank, Trees } from 'lucide-react-native';
+import React, { useMemo } from 'react';
+import { Pressable, SafeAreaView, ScrollView, View } from 'react-native';
 
 export default function ProfileScreen() {
     const router = useRouter();
@@ -17,6 +25,42 @@ export default function ProfileScreen() {
     const stripe = useAppSelector(selectStripeUserId);
     const {resetPaymentSheetCustomer} = useStripe()
     const {data} = useGetMeQuery();
+    const { data: stats } = useGetStatsQuery()
+
+    const badges = useMemo(() => {
+        if (!stats) return [];
+
+        return [
+            {
+                id: 1,
+                icon: Trees,
+                title: 'CO2 Beginner',
+                description: 'Undgået 1 kg CO2',
+                achieved: stats.cO2Saved >= 1,
+            },
+            {
+                id: 2,
+                icon: GlobeIcon,
+                title: 'CO2 Mester',
+                description: 'Undgået 10 kg CO2',
+                achieved: stats.cO2Saved >= 10,
+            },
+            {
+                id: 3,
+                icon: PiggyBank,
+                title: 'Sparegris',
+                description: 'Sparet 50 kr',
+                achieved: stats.moneySaved >= 50,
+            },
+            {
+                id: 4,
+                icon: Banknote,
+                title: 'Rigmand',
+                description: 'Sparet 500 kr',
+                achieved: stats.moneySaved >= 500,
+            },
+        ];
+    }, [stats]);
 
     const userData = {
         name: "Andreas Hansen",
@@ -86,6 +130,22 @@ export default function ProfileScreen() {
                             <Text className="text-sm ml-2 text-blue-600">kr</Text>
                         </HStack>
                     </View>
+                </View>
+
+                <Text className="text-xl font-semibold mb-4 px-4">
+                    Dine badges
+                </Text>
+
+                <View className="flex-row flex-wrap justify-between mx-4 gap-2">
+                    {badges.map((badge, index) => (
+                      <BadgeCard
+                        key={index}
+                        title={badge.title}
+                        description={badge.description}
+                        achieved={badge.achieved}
+                        icon={badge.icon}
+                      />
+                    ))}
                 </View>
 
                 {/* Previous Orders Section */}
