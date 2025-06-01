@@ -51,13 +51,13 @@ export default function RootLayout() {
 
     return (
         <GluestackUIProvider mode="system">
-            <Provider store={store}>
-                <StripeProvider publishableKey={"pk_test_51RH1h9QsPt84zxiHeWij93fG2SVjh9IMrQxpSBD3KTO4YvN0YEeWHtzJfNxHSLPkumgZagMDLLxTV6Jw9MhTTkVs00n1WhCpjH"}>
-                    <PersistGate persistor={persistor as never}>
-                        <RootLayoutNav/>
-                    </PersistGate>
-                </StripeProvider>
-            </Provider>
+                <Provider store={store}>
+                    <StripeProvider publishableKey={process.env.EXPO_PUBLIC_STRIPE_PUBLISHABLE_KEY!}>
+                        <PersistGate persistor={persistor as never}>
+                            <RootLayoutNav/>
+                        </PersistGate>
+                    </StripeProvider>
+                </Provider>
         </GluestackUIProvider>
     )
 }
