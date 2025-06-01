@@ -5,7 +5,6 @@ import {Text} from "@/components/ui/text";
 import SegmentedControl from "@/components/ui/segmented-control";
 import {Input, InputField, InputIcon, InputSlot} from "@/components/ui/input";
 import MealCategories from "@/features/meals/components/meal-categories";
-import {useBottomTabBarHeight} from "@react-navigation/bottom-tabs";
 import {useSafeAreaInsets} from "react-native-safe-area-context";
 import {useVendorsQuery} from "@/features/map/api/vendors";
 import { useFocusEffect, useLocalSearchParams } from 'expo-router';
@@ -16,7 +15,6 @@ import {useGetMealsQuery} from "@/features/meals/api/get-meals";
 import {useLocation} from '@/features/map/hooks/useLocation';
 import { SearchIcon } from '@/components/ui/icon';
 import Popup from "@/features/map/components/popup";
-import {useGetVendorMealsQuery} from "@/features/meals/api/get-vendor-meals";
 import {Image} from "@/components/ui/image";
 
 export default function SearchScreen() {
@@ -154,6 +152,7 @@ export default function SearchScreen() {
                                             source={{ uri: `https://eatup.blob.core.windows.net${marker.logo}` }}
                                             style={styles.markerImage}
                                             resizeMode="contain"
+                                            alt="Vendor logo"
                                         />
                                     </View>
                                 </Marker>
@@ -174,13 +173,6 @@ const styles = StyleSheet.create({
         width: "100%",
         top: 0,
         position: 'absolute'
-    },
-    map: {
-        height: '100%',
-        zIndex: 1,
-        width: "100%",
-        top: 0,
-        position: 'absolute',
     },
     markerContainer: {
         width: 40,
