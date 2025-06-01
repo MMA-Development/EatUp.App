@@ -1,4 +1,3 @@
-import { Button, ButtonText } from "@/components/ui/button";
 import {
   Drawer,
   DrawerBackdrop,
@@ -9,15 +8,15 @@ import {
 } from "@/components/ui/drawer";
 import { Heading } from "@/components/ui/heading";
 import { Text } from "@/components/ui/text";
-import React from "react";
+import React, {useCallback} from "react";
 import { ActivityIndicator, TouchableOpacity, View } from "react-native";
 import { HStack } from "@/components/ui/hstack";
 import { VStack } from "@/components/ui/vstack";
 import { Image } from "@/components/ui/image";
 import { triggerSoftHaptic } from "@/lib/haptics";
-import { useGetVendorMealsQuery } from "@/features/meals/api/get-vendor-meals";
 import moment from "moment/moment";
-import { router } from "expo-router";
+import {router, useFocusEffect} from "expo-router";
+import {useGetMealsQuery} from "@/features/meals/api/get-meals";
 
 interface PopupProps {
   isOpen: boolean;
@@ -35,11 +34,19 @@ export default function Popup({ isOpen, closeDrawer, vendorId }: PopupProps) {
     });
   };
 
-  const { data, isLoading } = useGetVendorMealsQuery({
-    take: 5,
+
+  const { data, isLoading, refetch } = useGetMealsQuery({
+    take: 10,
     skip: 0,
     vendorId: vendorId,
   });
+
+  useFocusEffect(
+      useCallback(() => {
+        refetch();
+      }, [])
+  );
+
   return (
     <>
       <Drawer isOpen={isOpen} size="md" anchor="bottom" onClose={closeDrawer}>
