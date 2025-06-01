@@ -17,6 +17,7 @@ import {useLocation} from '@/features/map/hooks/useLocation';
 import { SearchIcon } from '@/components/ui/icon';
 import Popup from "@/features/map/components/popup";
 import {useGetVendorMealsQuery} from "@/features/meals/api/get-vendor-meals";
+import {Image} from "@/components/ui/image";
 
 export default function SearchScreen() {
     const [selectedView, setSelectedView] = useState(0);
@@ -139,10 +140,24 @@ export default function SearchScreen() {
                     Platform.OS !== 'web' && latitude && longitude && (
                         <MapView style={styles.map} showsUserLocation={true} showsMyLocationButton={true} initialRegion={{longitude, latitude, latitudeDelta: 0.05, longitudeDelta: 0.05}}>
                             {data?.items.map((marker, index) => (
-                                <Marker key={index}
-                                        onPress={() => {setSelectedVendor(marker.id);openDrawer()}}
-                                        coordinate={{latitude: marker.latitude, longitude: marker.longitude}}>
+                                <Marker
+                                    key={index}
+                                    onPress={() => {
+                                        setSelectedVendor(marker.id);
+                                        openDrawer();
+                                    }}
+                                    coordinate={{ latitude: marker.latitude, longitude: marker.longitude }}
+                                >
+                                    {/* Show logo as the pin icon */}
+                                    <View style={styles.markerContainer}>
+                                        <Image
+                                            source={{ uri: `https://eatup.blob.core.windows.net${marker.logo}` }}
+                                            style={styles.markerImage}
+                                            resizeMode="contain"
+                                        />
+                                    </View>
                                 </Marker>
+
                             ))}
                     <Popup isOpen={showDrawer} closeDrawer={closeDrawer} vendorId={selectedVendor}/>
                         </MapView>)
@@ -159,5 +174,28 @@ const styles = StyleSheet.create({
         width: "100%",
         top: 0,
         position: 'absolute'
+    },
+    map: {
+        height: '100%',
+        zIndex: 1,
+        width: "100%",
+        top: 0,
+        position: 'absolute',
+    },
+    markerContainer: {
+        width: 40,
+        height: 40,
+        borderRadius: 20,
+        overflow: 'hidden',
+        backgroundColor: '#fff',
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderWidth: 1,
+        borderColor: '#ddd',
+    },
+    markerImage: {
+        width: 36,
+        height: 36,
+        borderRadius: 18,
     },
 });
