@@ -14,6 +14,7 @@ export const meals = eatupApi.injectEndpoints({
       },
     }),
   }),
+  overrideExisting: true,
 });
 
 export const { useGetFavoriteMealsQuery } = meals;

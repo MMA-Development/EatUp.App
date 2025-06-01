@@ -11,7 +11,7 @@ import { Text } from "@/components/ui/text";
 import { Heading } from "@/components/ui/heading";
 import { ArrowLeftIcon, FavouriteIcon, Icon } from "@/components/ui/icon";
 import moment from "moment";
-import { router } from "expo-router";
+import { router, useFocusEffect } from 'expo-router';
 import CheckoutButton from "@/features/stripe/components/checkout-button";
 import { useLocalSearchParams } from "expo-router";
 import { useGetMealQuery } from "@/features/meals/api/get-meal";
@@ -28,7 +28,7 @@ import {
   SelectIcon,
 } from "@/components/ui/select";
 import { ChevronDownIcon } from "@/components/ui/icon";
-import { useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from 'react';
 import FavoriteButton from "@/components/ui/favorite-button";
 import {
   useDeleteFavoriteMutation,
@@ -52,9 +52,17 @@ export default function MealDetailScreen() {
     data: meal,
     isLoading,
     error,
+    refetch: refetchMeal,
   } = useGetMealQuery(id!, {
     skip: !id,
+    refetchOnMountOrArgChange: true
   });
+
+  useFocusEffect(
+    useCallback(() => {
+      refetchMeal();
+    }, [])
+  );
 
   if (isLoading || !id) {
     return (

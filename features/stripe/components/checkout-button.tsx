@@ -1,8 +1,9 @@
+import { meals } from '@/features/meals/api/get-meal'
 import { useState } from "react";
 import { Alert } from "react-native";
 import { useStripe } from "@stripe/stripe-react-native";
 import { useFetchPaymentSheetParamsMutation } from "@/features/stripe/api/fetch-payment-sheet-params";
-import { useAppSelector } from "@/store/hooks";
+import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { selectStripeUserId, selectUser } from "@/features/auth/store";
 import { router } from "expo-router";
 import { triggerSoftHaptic } from "@/lib/haptics";
@@ -15,6 +16,7 @@ interface CheckoutButtonProps {
 }
 
 export default function CheckoutButton({meal, quantity}: CheckoutButtonProps) {
+    const dispatch = useAppDispatch()
     const { initPaymentSheet, presentPaymentSheet } = useStripe();
     const customerId = useAppSelector(selectStripeUserId);
     const user = useAppSelector(selectUser);
@@ -60,6 +62,11 @@ export default function CheckoutButton({meal, quantity}: CheckoutButtonProps) {
 
             if (presentError) {
                 Alert.alert(`Error code: ${presentError.code}`, presentError.message);
+                dispatch(
+                  meals.util.updateQueryData('getMeal', meal.id, (draft) => {
+                      draft.available = draft.available + Number(quantity)
+                  })
+                )
             } else {
                 router.replace("/profile"); // TODO: Navigate to specific order screen
             }

@@ -8,7 +8,7 @@ import { Button, ButtonText } from "@/components/ui/button";
 import { ActivityIndicator } from "react-native";
 import { FlashList } from "@shopify/flash-list";
 import { triggerSoftHaptic } from "@/lib/haptics";
-import { router } from "expo-router";
+import { router, useFocusEffect } from 'expo-router';
 import moment from "moment/moment";
 
 const ITEMS_PER_PAGE = 5;
@@ -16,7 +16,7 @@ const ITEMS_PER_PAGE = 5;
 export function OrdersList() {
   const [page, setPage] = useState(0);
 
-  const { data, isLoading, isFetching, error } = useGetOrdersQuery(
+  const { data, isLoading, isFetching, refetch } = useGetOrdersQuery(
     {
       skip: page * ITEMS_PER_PAGE,
       take: ITEMS_PER_PAGE,
@@ -25,6 +25,12 @@ export function OrdersList() {
     {
       refetchOnMountOrArgChange: true,
     }
+  );
+
+  useFocusEffect(
+    useCallback(() => {
+      refetch();
+    }, [page])
   );
 
   const hasMore = data ? data.items.length < data.totalCount : false;

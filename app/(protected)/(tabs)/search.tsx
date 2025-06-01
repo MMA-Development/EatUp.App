@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import MapView, {Callout, Marker} from 'react-native-maps';
 import {ActivityIndicator, Platform, StyleSheet, View} from 'react-native';
 import {Text} from "@/components/ui/text";
@@ -8,7 +8,7 @@ import MealCategories from "@/features/meals/components/meal-categories";
 import {useBottomTabBarHeight} from "@react-navigation/bottom-tabs";
 import {useSafeAreaInsets} from "react-native-safe-area-context";
 import {useVendorsQuery} from "@/features/map/api/vendors";
-import {useLocalSearchParams} from "expo-router";
+import { useFocusEffect, useLocalSearchParams } from 'expo-router';
 import {Slider, SliderFilledTrack, SliderThumb, SliderTrack} from '@/components/ui/slider';
 import {useDebouncedState} from "@/hooks/use-debounced-state";
 import MealList from "@/features/meals/components/meal-list";
@@ -48,7 +48,7 @@ export default function SearchScreen() {
         }
     }, [latitude, longitude]);
 
-    const {data: meals, isLoading: mealsIsLoading, refetch} = useGetMealsQuery({
+    const {data: meals, isLoading: mealsIsLoading, refetch: refetchMeals} = useGetMealsQuery({
         skip: 0,
         take: 10,
         search: searchValue,
@@ -65,9 +65,16 @@ export default function SearchScreen() {
         radius: 30000,    // search radius in metres
     });
 
-    const {data, error, isLoading} = useVendorsQuery({...params, search: searchValue}, {
+    const {data, error, isLoading, refetch: refetchVendors} = useVendorsQuery({...params, search: searchValue}, {
         refetchOnMountOrArgChange: true
     });
+
+    useFocusEffect(
+      useCallback(() => {
+          refetchMeals();
+          refetchVendors();
+      }, [])
+    );
 
     return (
         <View className={"flex-1 h-full bg-background-0"}>

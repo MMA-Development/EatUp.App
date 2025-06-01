@@ -1,3 +1,5 @@
+import { useFocusEffect } from 'expo-router'
+import { useCallback } from 'react'
 import {ActivityIndicator, SafeAreaView, ScrollView, View} from "react-native";
 import MealCarousel from "@/features/meals/components/meal-carousel";
 import {Meal} from "@/features/meals/types";
@@ -7,7 +9,7 @@ import {useGetRecommendedMealsQuery} from "@/features/meals/api/get-recommended-
 
 export default function Screen() {
 
-    const {data: lastChanceMeals, isLoading: mealsIsLoading} = useGetMealsQuery({
+    const {data: lastChanceMeals, isLoading: mealsIsLoading, refetch: refetchMeals} = useGetMealsQuery({
         skip: 0,
         take: 5,
         search: "",
@@ -18,11 +20,20 @@ export default function Screen() {
         refetchOnMountOrArgChange: true,
     });
 
-    const {data: recommendedMeals, isLoading: recommendedMealsIsLoading} = useGetRecommendedMealsQuery({
+
+    const {data: recommendedMeals, isLoading: recommendedMealsIsLoading, refetch: refetchRecommendedMeals} = useGetRecommendedMealsQuery({
         skip: 0,
         take: 5,
+    }, {
+        refetchOnMountOrArgChange: true,
     })
 
+    useFocusEffect(
+      useCallback(() => {
+          refetchMeals();
+          refetchRecommendedMeals()
+      }, [])
+    );
 
     return (
         <View className={"bg-background-0 flex-1"}>
