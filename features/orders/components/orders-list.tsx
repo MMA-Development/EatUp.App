@@ -9,6 +9,7 @@ import { ActivityIndicator } from "react-native";
 import { FlashList } from "@shopify/flash-list";
 import { triggerSoftHaptic } from "@/lib/haptics";
 import { router } from "expo-router";
+import moment from "moment/moment";
 
 const ITEMS_PER_PAGE = 5;
 
@@ -55,7 +56,7 @@ export function OrdersList() {
         <View className="bg-background-0 rounded-2xl p-5 border border-background-100 mb-4">
           <HStack className="justify-between">
             <VStack>
-              <Text className="text-sm text-gray-500">{order.createdAt}</Text>
+              <Text className="text-sm text-gray-500">{moment.utc(order.createdAt).local().format("HH:mm")}</Text>
               <Text className="text-lg font-medium mt-2">
                 {order.foodPackageTitle}
               </Text>
@@ -63,6 +64,7 @@ export function OrdersList() {
             <VStack className="items-end">
               <Text className="text-green-600 text-sm">-2,4 kg CO2</Text>
               <Text className="text-gray-600 mt-2">{order.price} kr</Text>
+                <Text className="text-gray-600 mt-2">Status: {order.paymentStatus}</Text>
             </VStack>
           </HStack>
         </View>

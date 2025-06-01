@@ -154,8 +154,8 @@ export default function MealDetailScreen() {
               Afhentning i dag
             </Text>
             <Text size="md" className="text-gray-600">
-              {moment(meal.firstAvailablePickup).format("HH:mm")} -{" "}
-              {moment(meal.lastAvailablePickup).format("HH:mm")}
+              {moment.utc(meal.firstAvailablePickup).local().format("HH:mm")} -{" "}
+              {moment.utc(meal.lastAvailablePickup).local().format("HH:mm")}
             </Text>
           </View>
 
