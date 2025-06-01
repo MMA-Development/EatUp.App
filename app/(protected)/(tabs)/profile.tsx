@@ -62,27 +62,7 @@ export default function ProfileScreen() {
         ];
     }, [stats]);
 
-    const userData = {
-        name: "Andreas Hansen",
-        co2Saved: 125.5,
-        moneySaved: 750,
-        previousOrders: [
-            {
-                id: 1,
-                date: "15. marts 2024",
-                meal: "Brød",
-                co2Saved: 2.3,
-                price: 89,
-            },
-            {
-                id: 2,
-                date: "12. marts 2024",
-                meal: "Grøntsager",
-                co2Saved: 3.1,
-                price: 95,
-            },
-        ],
-    };
+    if(!stats) return null
 
     return (
         <SafeAreaView className="bg-background-0 flex-1">
@@ -109,7 +89,7 @@ export default function ProfileScreen() {
                         </HStack>
                         <HStack className="items-baseline">
                             <Text className="text-3xl font-semibold text-green-600">
-                                {userData.co2Saved}
+                                {stats.cO2Saved}
                             </Text>
                             <Text className="text-sm ml-2 text-green-600">kg</Text>
                         </HStack>
@@ -125,7 +105,7 @@ export default function ProfileScreen() {
                         </HStack>
                         <HStack className="items-baseline">
                             <Text className="text-3xl font-semibold text-blue-600">
-                                {userData.moneySaved}
+                                {stats.moneySaved}
                             </Text>
                             <Text className="text-sm ml-2 text-blue-600">kr</Text>
                         </HStack>

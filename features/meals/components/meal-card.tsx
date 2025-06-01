@@ -31,8 +31,7 @@ export default function MealCard({ meal }: MealCardProps) {
       >
         {meal.averageReview ? (
             <View className="absolute top-2 right-2 z-10 flex-row items-center justify-center">
-              <Text className="text-typography-0">{meal.averageReview.toString()}/5</Text>
-              {[...Array(5)].map((_, index) => (
+              {[...Array(meal.averageReview)].map((_, index) => (
                   <Icon
                       key={index}
                       as={StarIcon}
@@ -71,8 +70,8 @@ export default function MealCard({ meal }: MealCardProps) {
           </View>
 
           <Text size="sm" className="text-gray-600 mt-1">
-            Afhent i dag {moment(meal.firstAvailablePickup).format("LT")} –{" "}
-            {moment(meal.lastAvailablePickup).format("LT")}
+            Afhent i dag {moment.utc(meal.firstAvailablePickup).local().format("LT")} –{" "}
+            {moment.utc(meal.lastAvailablePickup).local().format("LT")}
           </Text>
         </View>
       </Card>

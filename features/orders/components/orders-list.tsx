@@ -1,4 +1,4 @@
-import { TouchableOpacity, View } from "react-native";
+import {Alert, TouchableOpacity, View} from "react-native";
 import { Text } from "@/components/ui/text";
 import { VStack } from "@/components/ui/vstack";
 import { HStack } from "@/components/ui/hstack";
@@ -10,11 +10,28 @@ import { FlashList } from "@shopify/flash-list";
 import { triggerSoftHaptic } from "@/lib/haptics";
 import { router, useFocusEffect } from 'expo-router';
 import moment from "moment/moment";
+import {
+  Modal,
+  ModalBackdrop,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalFooter,
+  ModalHeader
+} from "@/components/ui/modal";
+import {Heading} from "@/components/ui/heading";
+import {CloseIcon, Icon, StarIcon} from "@/components/ui/icon";
+import {useAddReviewMutation} from "@/features/meals/api/review";
 
 const ITEMS_PER_PAGE = 5;
 
 export function OrdersList() {
   const [page, setPage] = useState(0);
+  const [showModal, setShowModal] = useState(false)
+  const [rating, setRating] = useState(0);
+  const [selectedMealId, setSelectedMealId] = useState<string | null>(null);
+
+  const [addReview] = useAddReviewMutation()
 
   const { data, isLoading, isFetching, refetch } = useGetOrdersQuery(
     {
@@ -41,8 +58,35 @@ export function OrdersList() {
     }
   }, [isFetching, hasMore]);
 
+    const submitMealRating = async () => {
+        if (!selectedMealId) return;
+
+        try {
+            await addReview({ mealId: selectedMealId, rating, description: "Lækkert" });
+            setRating(0);
+            Alert.alert("Tak!", "Tak for din vurdering.");
+        } catch (error) {
+            Alert.alert("Fejl", "Der opstod en fejl under afgivelse af vurderingen.");
+        }
+    };
+
+  const Star = ({index}: { index: number }) => (
+      <TouchableOpacity onPress={() => setRating(index)}>
+        <Icon
+            as={StarIcon}
+            size={"xl"}
+            color={index <= rating ? "#FFD700" : "#CBD5E1"}
+            style={{ marginHorizontal: 4 }}
+        />
+      </TouchableOpacity>
+  );
+
   const handlePress = async (order: any) => {
     if (order.paymentStatus !== "Completed") {
+      if (order.paymentStatus === "PickedUp") {
+          setSelectedMealId(order.foodPackageId);
+        setShowModal(true)
+      }
       return;
     }
 
@@ -52,6 +96,7 @@ export function OrdersList() {
       pathname: "/(protected)/order-pickup",
       params: {
         orderId: order.id,
+          orderTitle: order.foodPackageTitle
       },
     });
   };
@@ -119,6 +164,57 @@ export function OrdersList() {
           ) : null
         }
       />
+      <Modal
+          isOpen={showModal}
+          onClose={() => {
+            setShowModal(false)
+          }}
+          size="md"
+      >
+        <ModalBackdrop/>
+        <ModalContent>
+          <ModalHeader>
+            <Heading size="md" className="text-typography-950">
+              Hvordan var måltidet?
+            </Heading>
+            <ModalCloseButton>
+              <Icon
+                  as={CloseIcon}
+                  size="md"
+                  className="stroke-background-400 group-[:hover]/modal-close-button:stroke-background-700 group-[:active]/modal-close-button:stroke-background-900 group-[:focus-visible]/modal-close-button:stroke-background-900"
+              />
+            </ModalCloseButton>
+          </ModalHeader>
+          <ModalBody>
+            <View className="flex-row mb-6">
+              {[1, 2, 3, 4, 5].map((i) => (
+                  <Star key={i} index={i}/>
+              ))}
+            </View>
+          </ModalBody>
+          <ModalFooter>
+            <Button
+                variant="outline"
+                action="secondary"
+                onPress={() => {
+                  setShowModal(false)
+                }}
+            >
+              <ButtonText>Annuller</ButtonText>
+            </Button>
+            <Button
+                onPress={() => {
+                  submitMealRating().then(() => setShowModal(false));
+
+                }}
+                disabled={rating === 0}
+                className={rating === 0 ? "opacity-50" : ""}
+            >
+              <ButtonText>Bedøm</ButtonText>
+            </Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
     </View>
   );
 }
