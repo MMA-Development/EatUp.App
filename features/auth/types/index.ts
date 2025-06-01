@@ -1,33 +1,38 @@
-import {z} from 'zod'
+import { z } from "zod";
 
 export const LoginPayloadSchema = z.object({
-    username: z.string().min(2),
-    password: z.string().min(4)
-})
+  username: z.string().min(2),
+  password: z.string().min(4),
+});
 
-export type UpdatePayload = z.infer<typeof LoginPayloadSchema>
+export type UpdatePayload = z.infer<typeof LoginPayloadSchema>;
 
 export const LoginResponseSchema = z.object({
-    accessToken: z.string(),
-    refreshToken: z.string()
-})
+  accessToken: z.string(),
+  refreshToken: z.string(),
+});
 
-export type LoginResponse = z.infer<typeof LoginResponseSchema>
+export type LoginResponse = z.infer<typeof LoginResponseSchema>;
 
 export const MeResponseSchema = z.object({
-    email: z.string().email(),
-    username: z.string(),
-    fullName: z.string(),
-    stripeCustomerId: z.string()
-})
+  email: z.string().email(),
+  username: z.string(),
+  fullName: z.string(),
+  stripeCustomerId: z.string(),
+  favorites: z.array(
+    z.object({
+      mealId: z.string(),
+    })
+  ),
+});
 
-export type MeResponse = z.infer<typeof MeResponseSchema>
+export type MeResponse = z.infer<typeof MeResponseSchema>;
 
 export const SignupPayloadSchema = z.object({
-    username: z.string().min(4).trim(),
-    password: z.string().min(4).trim(),
-    fullName: z.string().min(4).trim(),
-    email: z.string().email().trim(),
-})
+  username: z.string().min(4).trim(),
+  password: z.string().min(4).trim(),
+  fullName: z.string().min(4).trim(),
+  email: z.string().email().trim(),
+});
 
-export type SignupPayload = z.infer<typeof SignupPayloadSchema>
+export type SignupPayload = z.infer<typeof SignupPayloadSchema>;

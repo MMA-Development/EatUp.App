@@ -47,7 +47,7 @@ export default function Popup({ isOpen, closeDrawer, vendorId }: PopupProps) {
         <DrawerBackdrop />
         <DrawerContent>
           <DrawerHeader>
-            <Heading size="2xl">Coop 365 Odense</Heading>
+            <Heading size="2xl">Måltider</Heading>
           </DrawerHeader>
           <DrawerBody>
             {isLoading && <ActivityIndicator size="large" className="mt-4" />}
@@ -76,8 +76,13 @@ export default function Popup({ isOpen, closeDrawer, vendorId }: PopupProps) {
                         </Text>
                         <Text className="text-sm text-gray-500 mt-2">
                           Afhent idag{" "}
-                          {moment(meal.firstAvailablePickup).format("HH:mm")} -{" "}
-                          {moment(meal.lastAvailablePickup).format("HH:mm")}
+                          {moment(meal.firstAvailablePickup)
+                            .local()
+                            .format("HH:mm")}{" "}
+                          -{" "}
+                          {moment(meal.lastAvailablePickup)
+                            .local()
+                            .format("HH:mm")}
                         </Text>
                       </VStack>
                       <VStack className="items-end">
