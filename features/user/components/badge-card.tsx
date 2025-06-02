@@ -25,9 +25,7 @@ export const BadgeCard = ({
       <Card
         size="sm"
         variant={achieved ? 'filled' : 'outline'}
-        className={`w-full items-center rounded-3xl ${achieved
-          ? 'bg-green-100 border-green-500 shadow-md'
-          : 'bg-gray-100 border-gray-300'}`}
+        className={`w-full items-center rounded-3xl`}
       >
         {achieved && (
           <Badge
